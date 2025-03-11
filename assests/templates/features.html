@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/api.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/widgets.js" type="module"></script>
+    <title>Magtronix</title>
+
+</head>
+<body>
+    <div id="title-bar-widget"></div>
+    <div id="content">
+        <div id="nav-bar-widget" style="height: 100%;"></div>
+        <div id="tab">
+            
+            <div id="search_widget"></div>
+            <p id="feature_header1" style="margin-left: 2vw; margin-top: 0; color: #E79C46; font-weight: bold; font-size: 2.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                Popular
+            </p>
+            <div id="popular_features" class="distinct_feature" style="display: flex;"></div>
+            <p id="feature_header2" style="margin-left: 2vw; margin-top: 3vh; color: #E79C46; font-weight: bold; font-size: 2.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                All Functionalities
+            </p>
+            <div id="all_functionalities" class="distinct_feature" style="height: 40vh;"></div>
+            <div id="empty_feature_container" style="display: none;">
+                <p>No Data Found</p>
+            </div>
+        </div>
+        <div id="popup-widget"></div>
+        <div id="notification-widget"></div>
+        <div id="request-response-widget"></div>
+    </div>
+
+
+    <script type="module">
+
+        import { 
+            createTitleBar, 
+            createNavBar, 
+            createPopup, 
+            inDisplayNotification, 
+            requestResponseLoader,
+            search_widget
+        } from '../js/widgets.js';
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.getElementById("title-bar-widget").innerHTML = createTitleBar();
+            document.getElementById("nav-bar-widget").innerHTML = createNavBar();
+            document.getElementById("popup-widget").innerHTML = createPopup();
+            document.getElementById("notification-widget").innerHTML = inDisplayNotification();
+            document.getElementById("request-response-widget").innerHTML = requestResponseLoader();
+            document.getElementById("search_widget").innerHTML = search_widget();
+
+            const empty_feature= document.getElementById('empty_feature_container');
+            const searchInput = document.getElementById("searchInput");
+            const feature_header1 = document.getElementById('feature_header1');
+            const feature_header2 = document.getElementById('feature_header2');
+            const popular_features = document.getElementById('popular_features');
+            const all_features = document.getElementById('all_functionalities');
+            const tab = document.getElementById('tab');
+            const popup = document.getElementById('popup');
+            const popupClose = document.getElementById('cancelBtn');
+
+            (async () => {
+                const features_data = await fetch_features();
+                if (features_data.length == 0) {
+                    empty_feature.style.display = "flex";
+                    feature_header2.style.display = "none";
+                    popular_features.style.display = "none";
+                    all_features.style.display = "none";
+                    console.log("Yes");
+                } else {
+                    empty_feature.style.display = "none";
+                    feature_header2.style.display = "block";
+                    popular_features.style.display = "flex";
+                    all_features.style.display = "flex";
+                    generateFeatureContainers(features_data);
+                    console.log("Inside")
+                }
+                
+            })();
+
+            
+            searchInput.addEventListener("input", function () {
+                const query = searchInput.value.toLowerCase();
+                const features = document.querySelectorAll(".featureContainer");
+
+                if (query === "") {
+                    feature_header1.textContent = "Popular";
+                    feature_header2.textContent = "All Functionalities";
+                    popular_features.style.display = "flex";
+
+                    features.forEach(feature => {
+                        feature.style.display = "flex";
+                    });
+                    return;
+                }
+                feature_header1.textContent = "Results";
+                feature_header2.textContent = "";
+                popular_features.style.display = "none";
+
+                features.forEach(feature => {
+                    const title = feature.querySelector(".feature_title").textContent.toLowerCase();
+                    feature.style.display = title.includes(query) ? "flex" : "none";
+                });
+            });
+
+            popupClose.addEventListener("click", function () {
+                tab.classList.remove("blur");
+                popup.style.display = "none";
+            });
+
+            // NAVIGATE TO OTHER PAGE
+            document.getElementById("Features").addEventListener("click", () => {
+                ipcRenderer.send("navigate-to-page", "features.html");
+            });
+            document.getElementById("Scenarios").addEventListener("click", () => { 
+                ipcRenderer.send("navigate-to-page", "scenarios.html");
+            });
+            document.getElementById("Tasks").addEventListener("click", () => {
+                ipcRenderer.send("navigate-to-page", "tasks.html");
+            });
+        });
+        
+    </script>
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/features.css">
+</body>
+</html>

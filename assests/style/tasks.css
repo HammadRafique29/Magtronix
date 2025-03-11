@@ -1,0 +1,60 @@
+/* 
+#########################################
+--------- Running Tasks Style
+#########################################
+ */
+
+#task_container {
+    width: 99%;
+    height: auto;
+}
+.table-container {
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+thead {
+    background: #E7E6E6;
+    border: 1px solid #CECECE;
+    color: rgb(82, 81, 81);
+    font-weight: normal;
+}
+thead th {
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.4vh;
+}
+tbody tr {
+    font-size: 1.3vh;
+}
+tbody td {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+tbody td button {
+    font-size: 1.3vh;
+}
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+.status-running {
+    color: green;
+    font-weight: bold;
+}
+.action-links {
+    color: rgb(101, 101, 104);
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+.action-links:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,323 @@
+/* 
+###################################
+------- Features Container Syle
+################################### 
+*/
+
+.empty_feature_container{
+    width: 100%;
+    height: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.0vh;
+    font-family: 'Arial';
+    color: rgb(100, 99, 99);
+}
+.empty_page_{
+    width: 100%;
+    height: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.0vh;
+    font-family: 'Arial';
+    color: rgb(100, 99, 99);
+}
+.distinct_feature {
+    display: flex;
+    column-gap: 1.5vw; 
+    margin-left: 4vw; 
+    flex-wrap: wrap;
+}
+.featureContainer {
+    width: 10vw; 
+    height: 18vh; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    margin-bottom: 1vh; 
+    transition: transform 0.3s ease;
+}
+.featureContainer:hover {
+    transform: scale(1.05);
+    color: #E79C46;
+    font-weight: bold;
+    cursor: pointer;
+}
+.featureContainer img {
+    width: 70%;
+    height: 60.2%;
+}
+.featureContainer .feature_title {
+    width: 95%;
+    word-wrap: break-word;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5vh; 
+}
+.selectInput {
+    height: 4.5vh;
+}
+
+
+
+/* 
+###################################
+------- Submit Button Loader
+################################### 
+*/
+
+.form_submit_loader {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+#feature_response {
+    height: auto;
+    max-height: 30.5vh;
+    border: 1px solid #8080807a;
+    border-radius: 10px;
+    padding: 0px 10px;
+    display: none;
+}
+.text_response_box {
+    width : 100%;
+    min-height : 5vh;
+    max-height : 28vh;
+    overflow-y : scroll;
+    font-size : 1.5vh;
+}
+.audio_response_box{
+    padding: 0;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+
+/* 
+#tab.blur {
+    filter: blur(5px);
+    background-color: rgba(67, 67, 67, 0.34);
+} */
+
+/* 
+#popup {
+    width: 60vw;
+    height: auto;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    background-color: #FCFCFC;
+    border-radius: 10px;
+    padding: 2vh; 
+    box-shadow: 0 4 4px #C0BABA;
+    margin-left: 50px;
+    z-index: 1000;
+}
+.popupLabel {
+        flex-shrink: 0; 
+        white-space: nowrap;
+        min-width: 8vw;
+    }
+
+#popupTitle{
+    width: 100%;
+    height: 10%;
+    font-size: 4.5vh;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #E79C46;
+    text-align: start;
+    padding: 10px;
+}
+#popUpSubTitle{
+    font-size: 3.5vh;
+}
+
+
+#popupBody{
+    width: 99%;
+    height: auto;
+    max-height: 35vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: self-start;
+    overflow-y: scroll;
+}
+#popupForm{
+    width: 60%;
+    min-height: 10vh;
+    height: auto;
+    max-height: 99%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5vh;
+    padding-left: 2.5vw;
+    justify-content: center;
+}
+
+.popupForm_message{
+    width: 100%;
+    height: 5.5vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    column-gap: 1vw;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.0vh;
+    color: rgb(92, 90, 90);
+}
+.popupAnchor {
+    width: 20%; 
+    height: 50%;
+    background-color: transparent;
+    border-bottom: 1px solid gray;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: #c15c02;
+    font-size: 2.0vh;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 1vh;
+    transition: width 0.3s ease-in-out, box-shadow 0.3s ease-in-out, 
+                border 0.3s ease-in-out, justify-content 0.3s ease-in-out;
+}
+
+.popupAnchor:hover {
+    width: 99%;  
+    cursor: pointer;
+    font-size: 2.1vh;
+    border: 1px solid #918f8f;
+    box-shadow: 1px 1px 5px #716f6f;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+
+.popupInput{
+    flex-grow: 1;
+    width: inherit;
+    height: 50%;
+    padding: 1vh;
+    border-radius: 1vh;
+    background-color: #FDF7F7;
+    border: 1px solid #CECECE;
+}
+.popupImage {
+    width: 40%;
+    max-height: 30vh;
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#popupBtns{
+    width: 97%;
+    height: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 1vw;
+    margin-top: 20px;
+}
+
+.popupBtnDeco{
+    min-width: 100px;
+    border-radius: 10px;
+    height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    column-gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+#submitBtn{
+    color: white;
+    cursor: pointer;
+    background-color: black;
+    font-weight: bold;
+    
+}
+#cancelBtn {
+    color: black;
+    cursor: pointer;
+    font-weight: normal;
+} */
+
+
+/* 
+#request_response_loader{
+    width:100vw;
+    height:99vh;
+    position: absolute;
+    background-color: rgba(153, 151, 151, 0.329);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    z-index: 10;
+}
+
+    .progress-bar {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    }
+
+    .circle {
+    height: 100%;
+    right: 0px;
+    position: absolute;
+    border: solid 4px  #E79C46;
+    border-top-color:  #7d7e7b80;
+    border-radius: 50%;
+    }
+
+    .border {
+    width: 100%;
+    transform: rotate(135deg);  
+    animation: spin 1.3s steps(2) .2s infinite;
+    -webkit-animation: spin 1.3s linear infinite;
+
+    }
+
+
+    @-webkit-keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    }
+
+    @keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } */

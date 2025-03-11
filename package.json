@@ -1,0 +1,47 @@
+{
+  "name": "magtronix",
+  "version": "1.0.0",
+  "main": "main.js",
+  "keywords": [
+    "AI Automation",
+    "Local AI",
+    "HammadRafique029"
+  ],
+  "author": "Hammad Rafique <https://github.com/HammadRafique29>",
+  "license": "ISC",
+  "description": "Magtronix - Your Personal AI Automation",
+  "homepage": "https://github.com/HammadRafique29",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HammadRafique29/Magtronix"
+  },
+  "bugs": {
+    "url": "https://github.com/HammadRafique29/Magtronix/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron --disable-background-blur .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^35.0.1",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "electron-notifications-win": "^0.8.0"
+  },
+  "build": {
+    "appId": "com.magtronix.magtronix",
+    "productName": "Magtronix",
+    "copyright": "© 2025 Hammad Rafique",
+    "icon": "C:/Users/Magician/Desktop/Magtronix/Magtronix/assests/images/favicon.ico"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}

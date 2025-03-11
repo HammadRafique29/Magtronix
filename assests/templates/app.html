@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="../js/api.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/tasks.js"></script>
+    <script src="../js/widgets.js" type="module"></script>
+    
+    <title>Magtronix</title>
+
+</head>
+<body>
+    <div id="title-bar-widget"></div>
+    <div id="content">
+        <div id="nav-bar-widget" style="height: 100%;"></div>
+        <div id="feautes_tab" style="display: none;width: -webkit-fill-available;height: 95vh;">
+            <div id="tab">
+            
+                <div class="SearchContainer">
+                    <div class="searchBox">
+                        <img class="" src="../images/search.png" alt="">
+                        <input id="feature_searchInput" type="text" placeholder="Search Features...">
+                    </div>
+                </div>
+                <p id="feature_header1" style="margin-left: 2vw; margin-top: 0; color: #E79C46; font-weight: bold; font-size: 2.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                    Popular
+                </p>
+                <div id="popular_features" class="distinct_feature" style="display: flex;"></div>
+                <p id="feature_header2" style="margin-left: 2vw; margin-top: 3vh; color: #E79C46; font-weight: bold; font-size: 2.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                    All Functionalities
+                </p>
+                <div id="all_functionalities" class="distinct_feature" style="height: 40vh;"></div>
+                <div id="empty_feature_container" class="empty_page_" style="display: none;">
+                    <p>No Data Found</p>
+                </div>
+
+            </div>
+
+         </div>
+
+        <div id="scenarios_tab" style="display: none;width: -webkit-fill-available;height: 95vh;">
+            <div id="tab">
+                <div id="task_screen">
+                    <div class="SearchContainer">
+                        <div class="searchBox">
+                            <img class="" src="../images/search.png" alt="">
+                            <input id="scerario_searchInput" type="text" placeholder="Search Features...">
+                        </div>
+                    </div>
+                    <p id="feature_header1"
+                        style="margin-left: 2.5vw;margin-bottom: 0; margin-top: 0; color: #E79C46; font-weight: bold; font-size: 4.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                        Scenarios
+                    </p>
+                    <div id="create_scenarios_continer">
+                        <div id="create_sc_left">
+                            <button id="create_scenerio_btn">
+                                <img src="../images/plus.png" style="width: 1.5vw;height: 3vh;" alt="">
+                                Create
+                            </button>
+                            <div id="scenarioDes">
+                                Automation Scenarios allow you to streamline repetitive tasks effortlessly. It will automate actions based on specific conditions, whether it’s scheduling tasks, managing files, or integrating with other tools. 
+                            </div>
+                        </div>
+                        <div id="create_sc_right">
+                            <img src="../images/scenario_logo.png" alt="">
+                        </div>
+                    </div>
+                    <div id="task_container">
+                        <div class="table-container">
+                            <table id="task_table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10vw;">ScenerioID</th>
+                                        <th style="width: 12vw;">Scenerio Type</th>
+                                        <th style="width: 20vw;">Name & Tags</th>
+                                        <th style="width: 2vw;text-align: center;">Status</th>
+                                        <th style="width: 2vw;text-align: center;">Logs</th>
+                                        <th style="width: 2vw;text-align: center;">Edit</th>
+                                        <th style="width: 2vw;text-align: center;">Stop</th>
+                                        <th style="width: 2vw;text-align: center;">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="empty_scenario_container" class="empty_page_" style="display: none;">
+                        <p>No Data Found</p>
+                    </div>
+    
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="running_tasks_tab" style="display: none;width: -webkit-fill-available;height: 95vh;">
+            <div id="tab">
+                <div id="task_screen">
+                    <div class="SearchContainer">
+                        <div class="searchBox">
+                            <img class="" src="../images/search.png" alt="">
+                            <input id="tasks_searchInput" type="text" placeholder="Search Features...">
+                        </div>
+                    </div>
+                    <p id="feature_header1"
+                        style="margin-left: 2vw; margin-top: 0; color: #E79C46; font-weight: bold; font-size: 2.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                        Tasks
+                    </p>
+                    <div id="task_container">
+                        <div class="table-container">
+                            <table id="running_task_table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10vw;">TaskID</th>
+                                        <th style="width: 12vw;">Task Type</th>
+                                        <th style="width: 20vw;">Name & Tags</th>
+                                        <th style="width: 2vw;text-align: center;">Status</th>
+                                        <th style="width: 2vw;text-align: center;">Logs</th>
+                                        <th style="width: 2vw;text-align: center;">Edit</th>
+                                        <th style="width: 2vw;text-align: center;">Stop</th>
+                                        <th style="width: 2vw;text-align: center;">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="empty_tasks_container" class="empty_page_" style="display: none;">
+                        <p>No Data Found</p>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div id="popup-widget"></div>
+    <div id="notification-widget"></div>
+    <div id="request-response-widget"></div>
+    <div id="task_details_popUp"></div>
+
+
+    <script type="module">
+
+        import { createTitleBar, createNavBar, createPopup, inDisplayNotification, 
+        requestResponseLoader, search_widget, task_details_popup } from '../js/widgets.js';
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.getElementById("title-bar-widget").innerHTML = createTitleBar();
+            document.getElementById("nav-bar-widget").innerHTML = createNavBar();
+            document.getElementById("popup-widget").innerHTML = createPopup();
+            document.getElementById("notification-widget").innerHTML = inDisplayNotification();
+            document.getElementById("request-response-widget").innerHTML = requestResponseLoader();
+            document.getElementById("task_details_popUp").innerHTML = task_details_popup();
+            // document.getElementById("search_widget").innerHTML = search_widget();
+
+            const empty_feature = document.getElementById('empty_feature_container');
+            const empty_scenario = document.getElementById('empty_scenario_container');
+            const empty_tasks_ = document.getElementById('empty_tasks_container');
+            
+            const searchInput = document.getElementById("searchInput");
+            const tab = document.getElementById('tab');
+            const task_logs_btn = document.getElementById('task_details_logs');
+            const task_files_btn = document.getElementById('task_details_file');
+            const task_logs_screen = document.getElementById('logs_task_details');
+            const task_files_screen = document.getElementById('task_files_details');
+            const feature_searchInput = document.getElementById("feature_searchInput");
+            const scenario_searchInput = document.getElementById("scerario_searchInput");
+            const tasks_searchInput = document.getElementById("tasks_searchInput");
+            const feature_header1 = document.getElementById('feature_header1');
+            const feature_header2 = document.getElementById('feature_header2');
+            const popular_features = document.getElementById('popular_features');
+            const all_features = document.getElementById('all_functionalities');
+            const popup = document.getElementById('popup');
+            const popupClose = document.getElementById('cancelBtn');
+
+            document.getElementById("close_control_btn").addEventListener("click", () => { 
+                showLoader();
+                ipcRenderer.send("close-window"); 
+                showLoader();
+            });
+            document.getElementById("minimize_control_btn").addEventListener("click", () => { ipcRenderer.send("minimize-window") });
+            document.getElementById("maximize_control_btn").addEventListener("click", () => { ipcRenderer.send("maximize-window") });
+
+            var FEATURES_DATA = null;
+            (async () => {
+                if (!FEATURES_DATA) FEATURES_DATA = await fetch_features();
+            })();
+            
+            // ADD DOWNLOAD FILES TO HTML
+            function addDownloadableFile(fileName, fileUrl, fileId) {
+                const container = document.getElementById("task_files_details_container");
+                const existingFile = document.getElementById(`file_id_${fileId}`);
+                if (existingFile) existingFile.remove();
+
+                const fileDiv = document.createElement("div");
+                fileDiv.className = "download_able_files";
+                fileDiv.id = `file_id_${fileId}`;
+                fileDiv.dataset.id = fileId;
+                fileDiv.dataset.link = fileUrl;
+                fileDiv.innerHTML = `
+                    <img src="../images/file.png" alt="File Icon">
+                    <p>${fileName}</p>
+                `;
+                fileDiv.addEventListener("click", () => window.location.href = fileUrl); // Add download functionality
+                container.appendChild(fileDiv); // Append and ensure visibility
+                container.style.display = "flex";
+            }
+            // UPDATE TASKS DOWNLOADABLE FILES
+            function update_download_files() { // File Actions (download vs Delete)
+                const actionBox = document.getElementById("file_actions");
+                document.querySelectorAll(".download_able_files").forEach(file => {
+                    file.addEventListener("mouseenter", function () {
+                        const { left, top } = this.getBoundingClientRect();
+                        actionBox.style.left = `calc(${(left / window.innerWidth) * 100}vw - 8vw)`;
+                        actionBox.style.top = `calc(${(top / window.innerHeight) * 100}vh - 35vh)`;
+                        actionBox.style.display = "flex";
+                        actionBox.dataset.id = this.dataset.id;
+                        actionBox.dataset.feature = this.dataset.feature;
+                        actionBox.dataset.link = this.dataset.link;
+                    });
+                });
+                document.addEventListener("mousemove", (e) => { // Hide the action box -> mouse moves away from action box
+                    if (!e.target.closest(".download_able_files") && !e.target.closest("#file_actions")) { actionBox.style.display = "none" }
+                });
+                actionBox.addEventListener("click", (e) => { // Handle click actions inside the action box
+                    const fileId = actionBox.dataset.id;
+                    const fileLink = actionBox.dataset.link;
+                    if (e.target.closest(".delete_btn")) {
+                        document.querySelector(`.download_able_files[data-id="${fileId}"]`)?.remove();
+                    } else if (e.target.closest(".download_btn")) {
+                        if (!fileLink.includes(".drive")) window.location.href = fileLink;
+                        else alert(`File is Corrupted. No valid download link...`);
+                    }
+                });
+            }
+            // CLOSE ALL OPEN TASK POPUP TABS
+            function closeAllTabs() {
+                task_logs_btn.style.backgroundColor = "#E7E6E6";
+                task_files_btn.style.backgroundColor = "#E7E6E6";
+                task_logs_screen.style.display = "none";
+                task_files_screen.style.display = "none";
+            }
+            // DELETE RUNNING TASK
+            async function delete_task(id, feature_name){
+                close_feature_popUp();
+                close_task_popUp();
+                console.log("Delete Res: ", id, feature_name);
+                await runOperation(id, feature_name, FEATURES_DATA[feature_name]['operations']['delete']['module'], true, '');
+            }
+            // GET RUNNING TASKS LOGS
+            async function get_logs(feature, id) {
+                task_logs_screen.style.display = "block";
+                task_logs_btn.style.backgroundColor = "#E79C46";
+                const logOutput = document.getElementById("task_logs");
+
+                var logs = await runOperation(id, feature, FEATURES_DATA[feature]['operations']['logs']['module'], false, '');
+                logOutput.textContent = logs;
+            }
+            // GET NEW TASK DATABASE FILES
+            async function get_files(id, feature) {
+                task_files_screen.style.display = "flex";
+                task_files_btn.style.backgroundColor = "#E79C46";
+                var files = await runOperation(id, feature, FEATURES_DATA[feature]['operations']['files']['module'], false, []);
+                files.forEach((file) => {
+                    console.log(file['name'], file['loc']);
+                    addDownloadableFile(file['name'], file['loc'], id);
+                });
+                update_download_files();
+            }
+            // ADD NEW TASK ROWS
+            // async function updateTasks() {
+            //     if (!FEATURES_DATA) FEATURES_DATA = await fetch_features();
+            //     let table = document.getElementById("task_table").getElementsByTagName("tbody")[0];
+
+            //     const fragment = document.createDocumentFragment();
+            //     var rows = await getRunningTasks();
+            //     rows.forEach((rowData) => {
+            //         let newRow = table.insertRow();
+            //         for (let i = 0; i < rowData.length; i++) {
+            //             let cell = newRow.insertCell(i);
+            //             cell.style.width = ["10vw", "12vw", "20vw", "2vw", "2vw", "2vw", "2vw", "2vw"][i];
+            //             cell.style.textAlign = (i >= 3) ? "center" : "left";
+            //             cell.innerHTML = rowData[i];
+            //         }
+            //         fragment.appendChild(newRow);
+            //     });
+            //     if (rows.length === 0) {
+            //         let newRow = table.insertRow();
+            //         let cell = newRow.insertCell(0);
+            //         cell.style.height = "90%";
+            //         cell.style.width = "10vw";
+            //         cell.style.display = "block";
+            //         cell.innerHTML = "No Task Founds";
+            //         cell.colSpan = 8;
+            //         fragment.appendChild(newRow);
+            //     }
+            //     table.innerHTML = "";
+            //     table.appendChild(fragment);
+            // }
+            async function updateTasks() {
+                if (!FEATURES_DATA) {
+                    FEATURES_DATA = await fetch_features();
+                }
+                let table = document.getElementById("running_task_table").getElementsByTagName("tbody")[0];
+                const fragment = document.createDocumentFragment();
+                var rows = await getRunningTasks();
+                rows.forEach((rowData) => {
+                    let newRow = table.insertRow();
+                    for (let i = 0; i < rowData.length; i++) {
+                        let cell = newRow.insertCell(i);
+                        cell.style.width = ["10vw", "12vw", "20vw", "2vw", "2vw", "2vw", "2vw", "2vw"][i];
+                        cell.style.textAlign = (i >= 3) ? "center" : "left";
+                        cell.innerHTML = rowData[i];
+                    }
+                    fragment.appendChild(newRow);
+                });
+                if (rows.length === 0) {
+                    let newRow = table.insertRow();
+                    let cell = newRow.insertCell(0);
+                    cell.style.height = "90%";
+                    cell.style.width = "10vw";
+                    cell.style.display = "block";
+                    cell.innerHTML = "No Task Founds";
+                    cell.colSpan = 8;
+                    fragment.appendChild(newRow);
+                }
+                table.innerHTML = "";
+                table.appendChild(fragment);
+            }
+            // UPDATE TASK DETAILS POPUP
+            function update_tasks_details_popUp() {
+                document.body.addEventListener("click", async (event) => {
+                    if (event.target.classList.contains("action-links")) {
+                        closeAllTabs();
+
+                        task_files_btn.dataset.id = event.target.dataset.id;
+                        task_files_btn.dataset.feature = event.target.dataset.feature;
+
+                        var task_details_popup = document.querySelectorAll('.task_details_head_btn');
+                        task_details_popup.forEach(element => {
+                            element.dataset.id = event.target.dataset.id;
+                            element.dataset.feature = event.target.dataset.feature;
+                        });
+                        const feature_id = event.target.dataset.id;
+                        const feature_name = event.target.dataset.feature;
+                        
+                        if (event.target.textContent.includes('Delete')) { 
+                            await delete_task(feature_id, feature_name ); 
+                            Tasks_Page_JS();
+                        } 
+                        else if (event.target.textContent.includes('Stop')) {}
+                        else if (event.target.textContent.includes('Edit')) {}
+                        else {
+                            document.getElementById('task_details_container').style.display = "flex";
+                            await get_logs(feature_name, feature_id);
+                        }   
+                    }
+                });
+            }
+            setInterval(async function() {
+                if (document.getElementById('running_tasks_tab').style.display != "none" && tasks_searchInput.value == "") {
+                    await updateTasks();
+                    update_tasks_details_popUp();
+                } 
+            }, 5000);
+
+            // OPEN TASK DETAILS POPUP
+            document.body.addEventListener("click", async (event) => {
+                if (event.target.classList.contains("task_details_head_btn")) {
+                    closeAllTabs();
+                    if (event.target.id === 'task_details_logs') {
+                        const feature_id = event.target.dataset.id;
+                        const feature_name = event.target.dataset.feature;
+                        await get_logs(feature_name, feature_id);
+                    } else if (event.target.id === 'task_details_file') {
+                        const feature_id = event.target.dataset.id;
+                        const feature_name = event.target.dataset.feature;
+                        console.log("Got it: ", feature_id, feature_name)
+                        await get_files(feature_id, feature_name);
+                    }
+                }
+            });
+            // CLOSE TASK DETAILS BUTTON
+            function close_task_popUp() {
+                document.getElementById('task_details_container').style.display = "none";
+                document.getElementById('task_details_container').style.display = "none";
+                document.getElementById('task_screen').style.display = "block";
+            }
+
+            function close_feature_popUp() {
+                tab.classList.remove("blur");
+                document.getElementById('popup').style.display = "none";
+            }
+
+            document.getElementById("close_task_details").addEventListener('click', () => { close_task_popUp() });
+            document.getElementById('cancelBtn').addEventListener("click", () => { close_feature_popUp() });
+            
+            popupClose.addEventListener("click", function () {
+                    Features_Page_JS();
+            });
+
+            // ############################################################################### -->
+            // ------------------------------ Features Page JS ------------------------------- -->
+            
+            function Features_Page_JS() {
+
+                close_task_popUp();
+                close_feature_popUp();
+
+                (async () => {
+                    FEATURES_DATA = await fetch_features();
+                    var features_data = FEATURES_DATA;
+                    if (features_data.length == 0) {
+                        empty_feature.style.display = "flex";
+                        feature_header2.style.display = "none";
+                        popular_features.style.display = "none";
+                        all_features.style.display = "none";
+                        console.log("Yes");
+                    } else {
+                        empty_feature.style.display = "none";
+                        feature_header2.style.display = "block";
+                        popular_features.style.display = "flex";
+                        all_features.style.display = "flex";
+                        generateFeatureContainers(features_data);
+                        console.log("Inside")
+                    }
+                })();
+                feature_searchInput.addEventListener("input", function () {
+                    const query = feature_searchInput.value.toLowerCase();
+                    const features = document.querySelectorAll(".featureContainer");
+
+                    if (query === "") {
+                        Features_Page_JS();
+                        feature_header1.textContent = "Popular";
+                        feature_header2.textContent = "All Functionalities";
+                        popular_features.style.display = "flex";
+                        features.forEach(feature => { feature.style.display = "flex" });
+                        return;
+                    }
+                    feature_header1.textContent = "Results";
+                    feature_header2.textContent = "";
+                    popular_features.style.display = "none";
+                    features.forEach(feature => {
+                        const title = feature.querySelector(".feature_title").textContent.toLowerCase();
+                        feature.style.display = title.includes(query) ? "flex" : "none";
+                    });
+                });
+            }
+
+
+
+            
+            // ############################################################################### -->
+            // ------------------------------ Senarios Page JS ------------------------------- -->
+
+            function Scenarios_Page_JS() {
+
+                close_task_popUp();
+                close_feature_popUp();
+
+                scenario_searchInput.addEventListener("keyup", function () {
+                    let filter = this.value.toLowerCase();
+                    let rows = document.querySelectorAll("#task_table tbody tr");
+                    let visibleRows = 0;
+
+                    rows.forEach(row => {
+                        let td1 = row.cells[0]?.textContent.toLowerCase();
+                        let td3 = row.cells[2]?.textContent.toLowerCase();
+
+                        if (td1.includes(filter) || td3.includes(filter)) {
+                            row.style.display = "";
+                            visibleRows++;
+                        } else { Scenarios_Page_JS(); }
+                    });
+
+                    let tbody = document.querySelector("#task_table tbody");
+                    let scenario_noDataRow = document.getElementById("scenario_noDataRow");
+                    if (visibleRows === 0) {
+                        if (!scenario_noDataRow) {
+                            let newRow = tbody.insertRow();
+                            newRow.id = "scenario_noDataRow";
+                            let cell = newRow.insertCell(0);
+                            cell.colSpan = 8;
+                            cell.style.textAlign = "start";
+                            cell.style.padding = "10px";
+                            cell.innerHTML = "No Task Found";
+                        }
+                    } else {
+                        if (scenario_noDataRow) { scenario_noDataRow.remove() }
+                    }
+                });
+                (async () => {  await updateTasks()  })();
+                update_tasks_details_popUp();
+            }
+        
+
+            
+            // ############################################################################### -->
+            // ---------------------------- Tasks Page JS ------------------------------------ -->
+
+            function Tasks_Page_JS() {
+
+                close_task_popUp();
+                close_feature_popUp();
+
+                const tab = document.getElementById('tab');
+
+                // SEARCH FUNCTIONALITIES
+                tasks_searchInput.addEventListener("keyup", function () {
+                    let filter = this.value.toLowerCase();
+                    let rows = document.querySelectorAll("#running_task_table tbody tr");
+                    let visibleRows = 0;
+
+                    rows.forEach(row => {
+                        let td1 = row.cells[0]?.textContent.toLowerCase(); 
+                        let td3 = row.cells[2]?.textContent.toLowerCase(); 
+
+                        if (td1.includes(filter) || td3.includes(filter)) {
+                            row.style.display = "";
+                            visibleRows++;
+                        } else {
+                            Tasks_Page_JS();
+                        }
+                    });
+                    let tbody = document.querySelector("#running_task_table tbody");
+                    let task_noDataRow = document.getElementById("task_noDataRow");
+
+                    if (visibleRows === 0) {
+                        if (!task_noDataRow) {
+                            let newRow = tbody.insertRow();
+                            newRow.id = "task_noDataRow";
+                            let cell = newRow.insertCell(0);
+                            cell.colSpan = 8;
+                            cell.style.textAlign = "start";
+                            cell.style.padding = "10px";
+                            cell.innerHTML = "No Task Found";
+                        }
+                    } else {
+                        if (task_noDataRow) task_noDataRow.remove(); 
+                    }
+                });
+                
+                // TASKS SEARCH FUNCTIONALITIES
+                (async () => { 
+                    await updateTasks();
+                })();
+                update_tasks_details_popUp();
+            }
+
+
+
+            function open_navagation_tab(tab) {
+                document.getElementById('feautes_tab').style.display = "none";
+                document.getElementById('scenarios_tab').style.display = "none";
+                document.getElementById('running_tasks_tab').style.display = "none";
+                tab.style.display = "flex";
+            }
+
+            open_navagation_tab(document.getElementById('feautes_tab'));
+            Features_Page_JS();
+
+            document.getElementById("nav-bar-widget").addEventListener("click", (event) => {
+                const target = event.target.closest(".navBtn"); 
+                if (target) {
+                    const page = target.getAttribute("data-page");
+                    if (page == "features") {
+                        open_navagation_tab(document.getElementById('feautes_tab'))
+                        Features_Page_JS();
+                    } else if (page == "scenarios") {
+                        open_navagation_tab(document.getElementById('scenarios_tab'))
+                        Scenarios_Page_JS();
+                    } else if (page == "tasks") {
+                        open_navagation_tab(document.getElementById('running_tasks_tab'))
+                        Tasks_Page_JS();
+                    }
+                }
+            });
+        
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/features.css">
+    <link rel="stylesheet" href="../style/tasks.css">
+    <link rel="stylesheet" href="../style/cr_scenario.css">
+    <link rel="stylesheet" href="../style/scenarios.css">
+
+</body>
+</html>

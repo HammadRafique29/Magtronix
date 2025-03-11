@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/api.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/tasks.js"></script>
+    <script src="../js/widgets.js" type="module"></script>
+    <title>Magtronix</title>
+
+</head>
+
+<body>
+    <div id="title-bar-widget"></div>
+
+    <div id="content">
+
+        <div id="nav-bar-widget" style="height: 100%;"></div>
+        
+        <div id="tab">
+            
+            <div id="task_details_popUp"></div>
+            <div id="task_screen">
+                <div id="search_widget"></div>
+                <p id="feature_header1"
+                    style="margin-left: 2vw; margin-top: 0; color: #E79C46; font-weight: bold; font-size: 2.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                    Tasks
+                </p>
+                <div id="task_container">
+                    <div class="table-container">
+                        <table id="task_table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10vw;">ScenerioID</th>
+                                    <th style="width: 12vw;">Scenerio Type</th>
+                                    <th style="width: 20vw;">Name & Tags</th>
+                                    <th style="width: 2vw;text-align: center;">Status</th>
+                                    <th style="width: 2vw;text-align: center;">Logs</th>
+                                    <th style="width: 2vw;text-align: center;">Edit</th>
+                                    <th style="width: 2vw;text-align: center;">Stop</th>
+                                    <th style="width: 2vw;text-align: center;">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="empty_feature_container" style="display: none;">
+                    <p>No Data Found</p>
+                </div>
+
+            </div>
+        </div>
+        <div id="notification-widget"></div>
+        <div id="request-response-widget"></div>
+    </div>
+      
+    
+    <script type="module">
+
+        import { 
+            createTitleBar, 
+            createNavBar, 
+            createPopup, 
+            inDisplayNotification, 
+            requestResponseLoader,
+            task_details_popup,
+            search_widget
+        } from '../js/widgets.js';
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.getElementById("title-bar-widget").innerHTML = createTitleBar();
+            document.getElementById("nav-bar-widget").innerHTML = createNavBar();
+            document.getElementById("notification-widget").innerHTML = inDisplayNotification();
+            document.getElementById("request-response-widget").innerHTML = requestResponseLoader();
+            document.getElementById("task_details_popUp").innerHTML = task_details_popup();
+            document.getElementById("search_widget").innerHTML = search_widget();
+            
+            const empty_feature = document.getElementById('empty_feature_container');
+            const searchInput = document.getElementById("searchInput");
+            const tab = document.getElementById('tab');
+
+            var FEATURES_DATA = null;
+
+            (async () => {
+                FEATURES_DATA = await fetch_features();
+
+            })();
+
+
+            // OPEN TASK DETAILS SCREEN
+            const task_logs_btn = document.getElementById('task_details_logs');
+            const task_files_btn = document.getElementById('task_details_file');
+
+            const task_logs_screen = document.getElementById('logs_task_details');
+            const task_files_screen = document.getElementById('task_files_details');
+
+            document.body.addEventListener("click", async (event) => {
+                if (event.target.classList.contains("task_details_head_btn")) {
+                    closeAllTabs();
+                    if (event.target.id === 'task_details_logs') {
+                        const feature_id = event.target.dataset.id;
+                        const feature_name = event.target.dataset.feature;
+                        await get_logs(feature_name, feature_id, FEATURES_DATA);
+                    } else if (event.target.id === 'task_details_file') {
+                        const feature_id = event.target.dataset.id;
+                        const feature_name = event.target.dataset.feature;
+                        console.log("Got it: ", feature_id, feature_name)
+                        await get_files(feature_id, feature_name, FEATURES_DATA);
+                    }
+                }
+            });
+
+            // SEARCH FUNCTIONALITIES
+            document.getElementById("searchInput").addEventListener("keyup", function () {
+                let filter = this.value.toLowerCase();
+                let rows = document.querySelectorAll("#task_table tbody tr");
+                let visibleRows = 0;
+
+                rows.forEach(row => {
+                    let td1 = row.cells[0]?.textContent.toLowerCase(); // First column (ScenarioID)
+                    let td3 = row.cells[2]?.textContent.toLowerCase(); // Third column (Name & Tags)
+
+                    if (td1.includes(filter) || td3.includes(filter)) {
+                        row.style.display = "";
+                        visibleRows++;
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+                // Handle "No Data Found" message
+                let tbody = document.querySelector("#task_table tbody");
+                let noDataRow = document.getElementById("noDataRow");
+
+                if (visibleRows === 0) {
+                    if (!noDataRow) {
+                        let newRow = tbody.insertRow();
+                        newRow.id = "noDataRow";
+                        let cell = newRow.insertCell(0);
+                        cell.colSpan = 8; // Spanning all columns
+                        cell.style.textAlign = "start";
+                        cell.style.padding = "10px";
+                        cell.innerHTML = "No Task Found";
+                    }
+                } else {
+                    if (noDataRow) {
+                        noDataRow.remove(); // Remove "No Task Found" if data is available
+                    }
+                }
+            });
+
+            // ADD TASK ROW
+            (async () => {
+                async function updateTasks() {
+                    if (!FEATURES_DATA) {
+                        FEATURES_DATA = await fetch_features();
+                    }
+                    let table = document.getElementById("task_table").getElementsByTagName("tbody")[0];
+                    // Create a document fragment to hold the new rows
+                    const fragment = document.createDocumentFragment();
+                    var rows = await getRunningTasks();
+                    rows.forEach((rowData) => {
+                        let newRow = table.insertRow();
+                        for (let i = 0; i < rowData.length; i++) {
+                            let cell = newRow.insertCell(i);
+                            cell.style.width = ["10vw", "12vw", "20vw", "2vw", "2vw", "2vw", "2vw", "2vw"][i];
+                            // cell.style.borderRight = "1px solid black";
+                            cell.style.textAlign = (i >= 3) ? "center" : "left";
+                            cell.innerHTML = rowData[i];
+                        }
+                         // Append the new row to the fragment
+                         fragment.appendChild(newRow);
+                    });
+                    if (rows.length === 0) {
+                        let newRow = table.insertRow();
+                        let cell = newRow.insertCell(0);
+                        cell.style.height = "90%";
+                        cell.style.width = "10vw";
+                        cell.style.display = "block";
+                        cell.innerHTML = "No Task Founds";
+                        cell.colSpan = 8; // Make sure "No Task Found" spans all columns
+                         // Append the new row to the fragment
+                         fragment.appendChild(newRow);
+                    }
+                    // Clear existing rows
+                    table.innerHTML = "";
+                    // Append the fragment to the table
+                    table.appendChild(fragment);
+                }
+                // Initial load
+                await updateTasks();
+                // Update every 3 seconds
+                setInterval(updateTasks, 3000);
+            })();
+
+            // CLOSE TASK DETAILS BUTTON
+            document.getElementById("close_task_details").addEventListener('click', () => {
+                document.getElementById('task_details_container').style.display = "none";
+                document.getElementById('task_details_container').style.display = "none";
+                document.getElementById('task_screen').style.display = "block";
+
+            })
+
+            // OPEN SPECIFIC TASK DETAILS
+            document.body.addEventListener("click", async (event) => {
+                if (event.target.classList.contains("action-links")) {
+                    console.log("Button Clicked:", event.target.innerText);
+                    closeAllTabs();
+
+                    task_files_btn.dataset.id = event.target.dataset.id;
+                    task_files_btn.dataset.feature = event.target.dataset.feature;
+
+                    var task_details_popup = document.querySelectorAll('.task_details_head_btn');
+                    task_details_popup.forEach(element => {
+                        element.dataset.id = event.target.dataset.id;
+                        element.dataset.feature = event.target.dataset.feature;
+                    });
+                    const feature_id = event.target.dataset.id;
+                    const feature_name = event.target.dataset.feature;
+                    
+                    if (event.target.textContent.includes('Delete')) {
+                        await delete_task(feature_id, feature_name, FEATURES_DATA );
+                    } else if (event.target.textContent.includes('Stop')) {}
+                    else if (event.target.textContent.includes('Edit')) {}
+                    else {
+                        document.getElementById('task_details_container').style.display = "flex";
+                        await get_logs(feature_name, feature_id, FEATURES_DATA);
+                    }
+                    
+                }
+
+            });
+
+            // NAVIGATE TO OTHER PAGE
+            document.getElementById("Features").addEventListener("click", () => {
+                ipcRenderer.send("navigate-to-page", "features.html");
+            });
+            document.getElementById("Scenarios").addEventListener("click", () => { 
+                ipcRenderer.send("navigate-to-page", "scenarios.html");
+            });
+            document.getElementById("Tasks").addEventListener("click", () => {
+                ipcRenderer.send("navigate-to-page", "tasks.html");
+            });
+        });
+
+    </script>
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/features.css">
+    <link rel="stylesheet" href="../style/scenarios.css">
+    <link rel="stylesheet" href="../style/cr_scenario.css">
+    <link rel="stylesheet" href="../style/tasks.css">
+</body>
+
+</html>

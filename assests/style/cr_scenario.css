@@ -1,0 +1,59 @@
+
+/* 
+#########################################
+--------- Create Scenarios Style
+#########################################
+ */
+
+#create_scenarios_continer{
+    width: 99%;
+    height: 33vh;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#create_sc_left{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    row-gap: 1vw;
+    color: rgb(99, 97, 97);
+    margin-left: 2vw;
+    margin-bottom: 5vh;
+}
+#create_sc_right{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#create_sc_right img{
+    width: 80%;
+    height: 90%;
+}
+#create_scenerio_btn{
+    width: 40%;
+    height: 40%;
+    border-radius: 20px;
+    color: white;
+    font-size: 3.5vh;
+    background-color: #E79C46;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5vw;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    box-shadow: 1px 1px 5px rgb(109, 108, 108);
+    transition: 0.5s all;
+}
+#create_scenerio_btn:hover{
+    font-size: 3.6vh;
+    cursor: pointer;
+}

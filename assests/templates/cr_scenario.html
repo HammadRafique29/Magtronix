@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="../js/api.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/tasks.js"></script>
+    <script src="../js/cr_scenario.js"></script>
+    <script src="../js/widgets.js" type="module"></script>
+
+    <title>Magtronix</title>
+
+    <style>
+        #tab {
+            width: 83%;
+        }
+
+        #save_scenerio_playground button {
+            width: 100px;
+            height: 4vh;
+            color: white;
+            background-color: black;
+            border-radius: 10px;
+            border: none;
+            font-size: 1.4vh;
+            box-shadow: 1px 1px 5px solid gray;
+            transition: 0.2s all;
+        }
+
+        #save_scenerio_playground button:hover {
+            font-size: 1.5vh;
+            cursor: pointer;
+        }
+
+        #save_scenerio_playground {
+            width: 99%;
+            height: 5vh;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+        #scenerio_playground_container {
+            /* width: 99%; */
+            height: 120vh;
+            display: flex;
+            padding-left: 5vw;
+            padding-right: 5vw;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: scroll;
+        }
+
+        #circle_emmpty_scen {
+            min-width: 150px;
+            min-height: 150px;
+            width: 7vw;
+            height: 14vh;
+            background-color: #ffb103;
+            border-radius: 100px;
+            box-shadow: 2px 2px 10px solid gray;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            align-items: center;
+        }
+        #circle_emmpty_scen img  {
+            pointer-events: none;
+        }
+
+        .circle_filled_scen {
+            min-width: 150px;
+            min-height: 150px;
+            width: 7vw;
+            height: 14vh;
+            background-color: #ffb103;
+            border-radius: 100px;
+            box-shadow: 2px 2px 10px solid gray;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            align-items: center;
+        }
+        .circle_filled_scen img  {
+            width: 100%;
+            pointer-events: none;
+        }
+        .connector {
+            width: 100px;
+            height: 5px;
+            border-radius: 10px;
+            background-color: rgb(32, 32, 32);
+            box-shadow: 1px 1px 5px gray;
+            margin: 20px 0;
+        }
+        .scenario_action_btns{
+            width: 100%;
+            display: flex; 
+            justify-content: flex-end;
+            column-gap: 2px;
+        }
+        .scenario_action_btns .scen_logs_btn{
+            color: gray;
+        }
+        .scenario_action_btns .scen_del_btn{
+            color: red;
+        }
+
+        .scenario_action_btns button{
+            border: none;
+            border-radius: 100px;
+        }
+
+
+        #feature_selector {
+            width: 20vw;
+            max-width: 390px;
+            height: 50vh;
+            position: absolute;
+            background-color: white;
+            border-radius: 10px;
+            padding: 5px 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: 1px 1px 5px gray;
+            border: 1px solid #808080a6;
+        }
+
+        #SearchContainer {
+            height: 5vh;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        #searchBox {
+            width: 100%;
+            margin-right: 0;
+            background-color: white;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #searchInput {
+            height: 40px;
+            color: black;
+            margin-right: 0px;
+        }
+
+        .show_features_containers {
+            width: 96%;
+            min-height: 6vh;
+            height: 5vh;
+            border-radius: 10px;
+            /* background-color: #0396ff; */
+            border: 1px solid rgba(128, 128, 128, 0.342);
+            display: flex;
+            column-gap: 5px;
+            justify-content: flex-start;
+            align-items: center;
+            padding-left: 0.2vw;
+            padding-right: 0.2vw;
+            min-height: 5.5vh;
+            cursor: pointer;
+        }
+        .show_features_containers:hover {
+            cursor: pointer;
+        }
+        
+        #features_frame {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            row-gap: 5px;
+            overflow-y: scroll;
+        }
+
+        .show_features_containers img {
+            width: 2vw;
+            height: 4vh;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        add_feature_selector_boundry
+        .show_features_containers .featureDesc {
+            display: flex;
+            flex-direction: column;
+            row-gap: 3px;
+            padding-left: 5px;
+        }
+
+        .show_features_containers .featureDesc .featureTitle {
+            width: 100%;
+            font-size: 1.5vh;
+            overflow-x: hidden;
+        }
+
+        .show_features_containers .featureDesc .featureInfo {
+            font-size: 1.3vh;
+            overflow: hidden;
+            color: #b50606;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="title-bar-widget"></div>
+    <div id="content">
+        <div id="nav-bar-widget" style="height: 100%;"></div>
+        <div id="tab" style="width: 83%;">
+
+            <div id="task_screen">
+                <p id="feature_header1"
+                    style="margin: 10px 0px 0px 2vw; margin-top: 0; color: #E79C46; font-weight: bold; font-size: 4.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                    Scenarios
+                </p>
+                <div style="height: 80vh;overflow: scroll;width: 100%;">
+                    <div id="scenerio_playground_container"></div>
+                </div>
+                
+                    <!-- <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin-top:3.7vh">
+                        <div class="scenario_action_btns">
+                            <button style="color: gray;">O</button>
+                            <button style="color: red;">X</button></div>
+                        <div class="circle_filled_scen">
+                            <img src="../images/tts_feature.png" alt="">
+                        </div>
+                        <p>TTS</p>
+                    </div>
+                    <div style="width: 100px;height: 5px;border-radius: 10px;background-color: rgb(32, 32, 32);box-shadow: 1px 1px 5px solid gray;"></div>
+                    <div id="circle_emmpty_scen">
+                        <img src="../images/plus.png" alt="">
+                    </div> -->
+                </div>
+                <div id="save_scenerio_playground">
+                    <button type="button">Save</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div id="popup-widget"></div>
+    <div id="feature_selector" style="display: none;z-index: 2000;">
+        <div id="SearchContainer" style="width: 100%;">
+            <div class="searchBox">
+                <img class="" src="../images/search.png" alt="">
+                <input id="searchInput" type="text" placeholder="Search Features...">
+            </div>
+        </div>
+        <div id="features_frame">
+            <div class="show_features_containers" data-feature="Heygen" data-title="Heygen - Automation"
+                data-func="__init__"><img src="../images/tts_feature.png" alt="Heygen - Automation">
+                <div class="featureDesc">
+                    <p class="featureTitle" style="margin: 0px; padding: 0px;">Heygen - Automation</p>
+                    <p class="featureInfo" style="margin: 0px; padding: 0px;">Not Found</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="notification-widget"></div>
+    <div id="request-response-widget"></div>
+    <div id="task_details_popUp"></div>
+    
+
+
+    <script type="module">
+
+        import { 
+            createTitleBar, 
+            createNavBar, 
+            createPopup, 
+            inDisplayNotification, 
+            requestResponseLoader,
+            task_details_popup,
+            search_widget
+        } from '../js/widgets.js';
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.getElementById("title-bar-widget").innerHTML = createTitleBar();
+            document.getElementById("nav-bar-widget").innerHTML = createNavBar();
+            document.getElementById("popup-widget").innerHTML = createPopup();
+            document.getElementById("notification-widget").innerHTML = inDisplayNotification();
+            document.getElementById("request-response-widget").innerHTML = requestResponseLoader();
+            document.getElementById("task_details_popUp").innerHTML = task_details_popup();
+            // document.getElementById("search_widget").innerHTML = search_widget();
+
+            const tab = document.getElementById('tab');
+            const task_details_container = document.getElementById('task_details_container');
+
+            const task_logs_btn = document.getElementById('task_details_logs');
+            const task_files_btn = document.getElementById('task_details_file');
+
+            const task_logs_screen = document.getElementById('logs_task_details');
+            const task_files_screen = document.getElementById('task_files_details');
+
+            var FEATURES_DATA = null;
+
+            (async () => {
+                FEATURES_DATA = await fetch_features();
+            })()
+
+            // ################################################################################3
+            function dig_till_task(top_parent_id, stop_at_parent, SCENARIOS ) {
+
+                var items = [];
+
+                function get_item_recursively(task) {
+                    if (task.task_id === stop_at_parent) {
+                        return null;
+                    }
+                    items.push(task["rtn"]);
+                    return task.child ? get_item_recursively(task.child) : null;
+                }
+                get_item_recursively(SCENARIOS[top_parent_id]);
+                console.log("Here it is: ", items);
+                return items;
+            }
+
+
+            var DRAFT_SCENARIOS = {
+                "default" : {
+                    "task_id": "task_001",
+                    "feature": "TTS",
+                    "func": "bulk_tts_with_excel",
+                    "icon": "../images/tts_feature.png",
+                    "methods": {
+                        "bulk_tts_with_excel" : {
+                            "args": {"message":"[input][str] Enter your message...", "speaker_name": ["SARAH", "Sarah"], "language":["en", "hi"]}, 
+                            "kwargs": { "image": ["ghcr.io/coqui-ai/tts"] },
+                            "desc": "TTS - Bulk Transcribe Using Sheet"
+                        }
+                    },
+                    "rtn": {
+                        "id": "@default/task_001",
+                        "name": "Bulk_TTS_Response_task_001",
+                        "format":  "response/file",
+                        "rtn_value": "/home/file.xlsx"
+                    },
+                    'child': {
+                        "task_id": "task_002",
+                        "feature": "TTS - Automate",
+                        "func": "bulk_tts_with_excel",
+                        "icon": "../images/tts_feature.png",
+                        "methods": {
+                            "bulk_tts_with_excel" : {
+                                "args": {"message":"[input][str] Enter your message...", "speaker_name": ["SARAH", "Sarah"], "language":["en", "hi"]}, 
+                                "kwargs": { "image": ["ghcr.io/coqui-ai/tts"] },
+                                "desc": "TTS - Bulk Transcribe Using Sheet"
+                            }
+                        }, 
+                        "rtn": {
+                            "id": "@default/task_002",
+                            "name": "Bulk_TTS_Response_task_001",
+                            "format":  "response/file",
+                            "rtn_value": "/home/file.xlsx"
+                        },
+                        'child': null
+                    }
+                }
+            }
+
+            
+            async function handle_scenario_details_popup_(scenario_id, scenario_task_id, feature, exec) {
+
+                closeAllTabs();
+                task_details_container.style.display = "flex";
+                const task_details_popup = document.querySelectorAll('.task_details_head_btn');
+                task_details_popup.forEach(element => {
+                    element.dataset.scenario_id = scenario_id;
+                    element.dataset.scenario_task_id = scenario_task_id;
+                    element.dataset.feature = feature;
+                });
+                var task_server_id = findTask(DRAFT_SCENARIOS, scenario_id, scenario_task_id)?.rtn?.rtn_value?.task_id || null;
+
+                console.log(scenario_id, scenario_task_id, feature, exec);
+
+                if (exec === "logs") {
+                    task_logs_screen.style.display = "block";
+                    task_logs_btn.style.backgroundColor = "#E79C46";
+                    const logOutput = document.getElementById("task_logs");
+                    const server_logs = findTask(DRAFT_SCENARIOS, scenario_id, scenario_task_id)?.rtn?.rtn_value?.logs;
+                    console.log(FEATURES_DATA, feature)
+                    logOutput.textContent = await runOperation(task_server_id, feature, FEATURES_DATA[feature]['operations']['logs']['module'], false, '');
+                    // if (!server_logs && !task_server_id) logOutput.textContent = "No Response Yet. Please Wait...";
+                    // else if (server_logs && !task_server_id) logOutput.textContent = server_logs;
+                    // else if (server_logs && task_server_id) {
+                    //     console.log(FEATURES_DATA, feature)
+                    //     logOutput.textContent = await runOperation(task_server_id, feature, FEATURES_DATA[feature]['operations']['logs']['module'], true, '');
+                    // }
+                } else if (exec === "files") {
+                    task_files_screen.style.display = "flex";
+                    task_files_btn.style.backgroundColor = "#E79C46";
+                    const server_files = findTask(DRAFT_SCENARIOS, scenario_id, scenario_task_id)?.rtn?.rtn_value?.files;
+                    const files = await runOperation(task_server_id, feature, FEATURES_DATA[feature]['operations']['files']['module'], true, []);
+                    files?.forEach((file) => addDownloadableFile(file['name'], file['loc'], task_server_id));
+                    // if (server_files && !task_server_id) {
+                    //     server_files.forEach((file) => addDownloadableFile(file['name'], file['loc'], task_server_id));
+                    // } else if (server_files && task_server_id) {
+                    //     const files = await runOperation(task_server_id, feature, FEATURES_DATA[feature]['operations']['files']['module'], true, []);
+                    //     files?.forEach((file) => addDownloadableFile(file['name'], file['loc'], task_server_id));
+                    // }
+                    update_download_files();
+                }
+            }
+
+            document.body.addEventListener("click", async (event) => {
+                if (event.target.classList.contains("task_details_head_btn")) {
+                    const scenario_id = event.target.dataset.scenario_id;
+                    const scenario_task_id = event.target.dataset.scenario_task_id;
+                    const feature_name = event.target.dataset.feature;
+                    if (event.target.id === 'task_details_logs') await handle_scenario_details_popup_(scenario_id, scenario_task_id, feature_name, 'logs');
+                    else if (event.target.id === 'task_details_file') await handle_scenario_details_popup_(scenario_id, scenario_task_id, feature_name, 'files');
+                }
+            });
+
+            // Function to dynamically generate scenarios
+            function generateScenarios() {
+                const playground = document.getElementById("scenerio_playground_container");
+                playground.innerHTML = ""; // Clear existing content
+
+                // Recursive function to build scenarios
+                function buildScenario(id, scenario, parentElement) {
+                    if (!scenario) return;
+
+                    // Wrapper div for scenario
+                    let wrapper = document.createElement("div");
+                    wrapper.dataset.scenario_id = id;
+                    wrapper.dataset.task_id = scenario.task_id;
+                    wrapper.dataset.feature = scenario.feature;
+                    wrapper.dataset.func = scenario.func;
+                    
+                    wrapper.style.display = "flex";
+                    wrapper.style.flexDirection = "column";
+                    wrapper.style.alignItems = "center";
+                    wrapper.style.marginTop = "3.7vh";
+
+                    let actionBtnsCon = document.createElement("div");
+                    actionBtnsCon.classList.add('scenario_action_btns');
+
+                    let logs_btn = document.createElement("button");
+                    logs_btn.classList.add("scen_logs_btn");
+                    logs_btn.textContent = "O";
+                    logs_btn.dataset.scenario_id = id;
+                    logs_btn.dataset.task_id = scenario.task_id;
+                    logs_btn.dataset.feature = scenario.feature;
+                    logs_btn.dataset.func = scenario.func;
+
+                    logs_btn.addEventListener('click', async (event) => {
+                        
+                        event.stopPropagation();
+                        close_all_open_popUp();
+
+                        if (!FEATURES_DATA) {
+                            FEATURES_DATA = await fetch_features();
+                        }
+
+                        // open_task_popUp()
+
+                        // document.getElementById("popup").style.display = "flex";
+                        handle_scenario_details_popup_(id, scenario.task_id, scenario.feature, "logs");  
+                    })
+
+                    let run_btn = document.createElement("button");
+                    run_btn.classList.add("scen_logs_btn");
+                    run_btn.textContent = "R";
+                    run_btn.dataset.scenario_id = id;
+                    run_btn.dataset.task_id = scenario.task_id;
+                    run_btn.dataset.feature = scenario.feature;
+                    run_btn.dataset.func = scenario.func;
+
+                    run_btn.addEventListener('click', async (event) => {
+                        
+                        event.stopPropagation();
+                        close_all_open_popUp();
+
+                        const current_task = findTask(DRAFT_SCENARIOS, id, scenario.task_id);
+                        const request_method = Object.keys(current_task.methods)[0];
+                        console.log({...current_task.methods[request_method].args, ...current_task.methods[request_method].kwargs});
+                        
+                        var kwargs_builder = {'kwargs': {...current_task.methods[request_method].args, ...current_task.methods[request_method].kwargs}}
+                        Object.entries(kwargs_builder['kwargs']).forEach(([id, value]) => {
+                            if (typeof value === "string"){
+                                if (value.includes("@")) {
+                                    console.log("Here is our fetched data before: ", kwargs_builder['kwargs']);
+                                    var ids = value.split("/");
+                                    const key_dy_res = findTask(DRAFT_SCENARIOS, ids[0].replace('@', ''), ids[1])['rtn']['rtn_value'];
+                                    kwargs_builder['kwargs'][id] = key_dy_res;
+                                    console.log("Here is our fetched data after: ", kwargs_builder['kwargs']);
+                                }
+                            }    
+                        });
+
+                        var task_response = await runFeature(scenario.feature, scenario.func, kwargs_builder);
+                        console.log(task_response);
+                        var temp = findTask(DRAFT_SCENARIOS, id, scenario.task_id)['rtn'];
+                        temp['rtn_value'] = task_response
+                        DRAFT_SCENARIOS[id] = updateTask(DRAFT_SCENARIOS, id, scenario.task_id, "rtn", temp);
+                        console.log("Update Value: ", findTask(DRAFT_SCENARIOS, id, scenario.task_id));
+                    })
+
+                    let del_btn = document.createElement("button");
+                    del_btn.classList.add("scen_del_btn");
+                    del_btn.textContent = "X";
+                    del_btn.dataset.scenario_id = id;
+                    del_btn.dataset.task_id = scenario.task_id;
+                    del_btn.dataset.feature = scenario.feature;
+                    del_btn.dataset.func = scenario.func;
+
+                    del_btn.addEventListener('click', async (event) => {
+
+                        event.stopPropagation();
+                        close_all_open_popUp();
+
+                        if (!FEATURES_DATA) {
+                            FEATURES_DATA = await fetch_features();
+                        }
+                        // await delete_task(feature_id, feature_name, FEATURES_DATA );
+                        // handle_scenario_details_popup_(id, scenario.task_id, scenario.feature, "logs");  
+                    })
+
+                    actionBtnsCon.appendChild(logs_btn);
+                    actionBtnsCon.appendChild(run_btn);
+                    actionBtnsCon.appendChild(del_btn);
+
+                    wrapper.appendChild(actionBtnsCon);
+                    
+                    wrapper.addEventListener('click', async () => {
+
+                        var items = dig_till_task(id, scenario.task_id, DRAFT_SCENARIOS);
+
+                        createScenarioPopupContent(scenario.feature, scenario.func, scenario, items);
+                        open_feature_popUp();
+
+                        console.log("Waiting for scenarios_submit_actions...");
+                        DRAFT_SCENARIOS = await scenarios_submit_actions(id, scenario.task_id, DRAFT_SCENARIOS);
+                        
+                        if (DRAFT_SCENARIOS) {
+                            console.log("Here it is:", DRAFT_SCENARIOS);
+                        } else {
+                            console.log("Scenario submission failed or canceled.");
+                        }
+                    });
+
+
+                    // Create the filled circle
+                    let filledCircle = document.createElement("div");
+                    filledCircle.className = "circle_filled_scen";
+                    filledCircle.innerHTML = `<img src="${scenario.icon}" alt="${scenario.feature}">`;
+
+                    // Create the label
+                    let label = document.createElement("p");
+                    label.innerText = scenario.feature;
+
+                    // Append circle and label to wrapper
+                    wrapper.appendChild(filledCircle);
+                    wrapper.appendChild(label);
+
+                    // Append wrapper to parent
+                    parentElement.appendChild(wrapper);
+
+                    // If there's a child, draw a connecting line and recurse
+                    if (scenario.child) {
+                        let line = document.createElement("div");
+                        line.className = "connector";
+                        parentElement.appendChild(line); // Append line between parent and child
+
+                        // Recursively build child scenario
+                        buildScenario(`${id}`, scenario.child, parentElement);
+                    } else {
+                        // If no child, add empty circle
+                        let line = document.createElement("div");
+                        line.className = "connector";
+                        parentElement.appendChild(line); // Append line
+
+                        let emptyCircle = document.createElement("div");
+                        emptyCircle.id = "circle_emmpty_scen";
+                        emptyCircle.innerHTML = '<img src="../images/plus.png" alt="">';
+                        parentElement.appendChild(emptyCircle);
+                    }
+                }
+
+                if (DRAFT_SCENARIOS.length === 0) {
+                    // If no scenarios, show empty circle
+                    let emptyCircle = document.createElement("div");
+                    emptyCircle.id = "circle_emmpty_scen";
+                    emptyCircle.innerHTML = '<img src="../images/plus.png" alt="">';
+                    playground.appendChild(emptyCircle);
+                    return;
+                }
+                
+               // Generate scenarios dynamically
+                Object.entries(DRAFT_SCENARIOS).forEach(([id, scenario]) => {
+                    buildScenario(id, scenario, playground);
+                });
+            }
+
+            // Call function to render scenarios
+            generateScenarios();
+
+
+            // (async () => {
+               
+            //     function traverseScenario(scenario) {
+            //         if (!scenario) {return;}
+
+            //         Object.entries(scenario).forEach(([key, value]) => {
+            //             console.log(key);
+            //         });
+            //         traverseScenario(scenario.child);
+            //     }
+
+            //     DRAFT_SCENARIOS.forEach(scenario => {
+            //         traverseScenario(scenario);
+            //     }); 
+            // })()
+
+
+            async function get_scenario_feature() {
+                var results = [];
+
+                if (!FEATURES_DATA) {
+                    FEATURES_DATA = await fetch_features();
+                }
+                Object.entries(FEATURES_DATA).forEach(([key, feature]) => {
+                    console.log("Key:", key);
+
+                    if (feature.methods) {
+                        Object.entries(feature.methods).forEach(([methodName, methodDetails]) => {
+
+                            if (methodName != "default") {
+
+                                results.push({
+                                    'feature': key,
+                                    "title": feature['name'],
+                                    'func': methodName,
+                                    'desc': methodDetails.desc ? methodDetails.desc : "Not Found",
+                                    "icon": feature['icon'],
+                                    'args': methodDetails.args ? methodDetails.args : {},
+                                    'kwargs': methodDetails.kwargs ? methodDetails.kwargs : {},
+
+                                })
+                            }
+                        });
+                    }
+                });
+                console.log(results);
+                return results;
+            }
+
+            ( async () => {
+                var scenarios = await get_scenario_feature();
+                display_scenarios_features(scenarios);
+            })
+
+            // OPEN ADD SCENARIO TASK POPUP
+            document.getElementById("circle_emmpty_scen").addEventListener("click", function () {
+                const feature_selector = document.getElementById('feature_selector');
+                const cirle_empty_scen = document.getElementById('circle_emmpty_scen');
+                const rect = cirle_empty_scen.getBoundingClientRect();
+                const x = rect.left + window.scrollX;
+                const y = rect.top + window.scrollY;
+
+                // Adjust the position of the feature selector
+                feature_selector.style.left = `${x + cirle_empty_scen.offsetWidth}px`; // Position to the right of the circle
+                feature_selector.style.top = `${y - (y/3)}px`; // Align with the top of the circle
+                feature_selector.style.display = "flex";
+
+            });
+
+            // SEARCH FUNCTIONALITY
+            document.getElementById("searchInput").addEventListener("input", function () {
+                let filter = this.value.toLowerCase();
+                let features = document.querySelectorAll(".show_features_containers");
+
+                features.forEach(feature => {
+                    let title = feature.getAttribute("data-title").toLowerCase();
+                    let featureName = feature.getAttribute("data-feature").toLowerCase();
+
+                    console.log(title, featureName);
+
+                    if (title.includes(filter) || featureName.includes(filter)) {
+                        feature.style.display = "flex"; // Show the matching feature
+                    } else {
+                        feature.style.display = "none"; // Hide non-matching features
+                    }
+                });
+            });
+
+
+            function add_feature_selector_boundry(widget) {
+
+                document.getElementById("tab").addEventListener('click', (event) => {
+                    let target = event.target;
+                    const featureSelector = document.getElementById('feature_selector');
+                    const circleEmptyScen = document.getElementById('circle_emmpty_scen');
+                    const popupBox = document.getElementById('popup');
+
+                    if (featureSelector && !featureSelector.contains(target) && (target !== widget)) {
+                        featureSelector.style.display = "none";
+                    }
+                });
+            }
+            add_feature_selector_boundry(document.getElementById('circle_emmpty_scen'));
+
+            
+            // OPEN FEATURE_POPUP
+            function open_feature_popUp() {
+                tab.classList.add("blur");
+                document.getElementById('popup').style.display = "flex";
+            }
+            // OPEN TASK DETAILS BUTTON
+            function open_task_popUp() {
+                document.getElementById('task_details_container').style.display = "flex";
+                document.getElementById('task_screen').style.display = "none";
+            }
+
+            // CLOSE FEATURE_POPUP
+            function close_feature_popUp() {
+                tab.classList.remove("blur");
+                document.getElementById('popup').style.display = "none";
+            }
+            // CLOSE TASK DETAILS BUTTON
+            function close_task_popUp() {
+                document.getElementById('task_details_container').style.display = "none";
+                document.getElementById('task_screen').style.display = "block";
+            }
+    
+            function close_all_open_popUp(){
+                close_task_popUp();
+                close_feature_popUp()
+            }
+            document.getElementById("close_task_details").addEventListener('click', () => { close_task_popUp() });
+            document.getElementById('cancelBtn').addEventListener("click", () => { close_feature_popUp() });
+
+
+
+            // NAVIGATE TO OTHER PAGE
+            document.getElementById("Features").addEventListener("click", () => {
+                ipcRenderer.send("navigate-to-page", "features.html");
+            });
+            document.getElementById("Scenarios").addEventListener("click", () => {
+                ipcRenderer.send("navigate-to-page", "scenarios.html");
+            });
+            document.getElementById("Tasks").addEventListener("click", () => {
+                ipcRenderer.send("navigate-to-page", "tasks.html");
+            });
+
+
+        });
+    </script>
+    
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/features.css">
+    <link rel="stylesheet" href="../style/tasks.css">
+    <link rel="stylesheet" href="../style/scenarios.css">
+    <link rel="stylesheet" href="../style/cr_scenario.css">
+    
+
+
+</body>
+
+</html>
