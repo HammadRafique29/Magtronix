@@ -64,6 +64,23 @@ function hideLoader() {
 }
 
 
+function copyText(event) {
+    const referId = event.target.getAttribute("data-refer");
+    if (!referId) return;
+    
+    const textElement = document.getElementById(referId);
+    if (!textElement) return;
+    
+    const textToCopy = textElement.innerText || textElement.textContent;
+    
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        show_inDisplayNotification("success", "Success", "Copied to clipboard", `${textToCopy}`);
+    }).catch(err => {
+        show_inDisplayNotification("danger", "Failed", "Copied to clipboard", `${err}`);
+    });
+}
+
+
 function generateFeatureContainers(features) {
     const popular_features   = document.getElementById('popular_features');
     const allFunctionalities = document.getElementById('all_functionalities');
@@ -339,6 +356,9 @@ function createPopupContent(feature_name, method_name, featureData) {
     popupImage.alt = featureData.name;
 
     const popupForm = document.getElementById('popupForm');
+    while (popupForm.firstChild) {
+        popupForm.removeChild(popupForm.firstChild);
+    }
     popupForm.innerHTML = '';
 
     const createFormElement = (key, value, isOptional = false) => {

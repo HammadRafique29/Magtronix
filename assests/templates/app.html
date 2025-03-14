@@ -139,6 +139,106 @@
             </div>
         </div>
 
+        <div id="connected_servers_tab" style="display: none;width: -webkit-fill-available;height: 95vh;">
+            <div id="tab">
+                <div id="servers_screen">
+                    <div class="SearchContainer">
+                        <div class="searchBox">
+                            <img class="" src="../images/search.png" alt="">
+                            <input id="server_searchInput" type="text" placeholder="Search Servers...">
+                        </div>
+                    </div>
+                    <p id="feature_header1"
+                        style="margin-left: 2.5vw;margin-bottom: 0; margin-top: 0; color: #E79C46; font-weight: bold; font-size: 4.5vh; font-family: Arial, Helvetica, sans-serif; padding: 0;">
+                        Servers
+                    </p>
+                    <div id="connect_server_continer" class="feature_info_container">
+                        <div class="feature_info_left">
+                            <button id="connect_server_btn" class="create_feature_btn">
+                                <img src="../images/plus.png" style="width: 1.5vw;height: 3.4vh;" alt="">
+                                Connect Server
+                            </button>
+                            <div id="featureDes">
+                                Cloud Server enables seamless execution of tasks on connected client servers. Tasks run efficiently in the cloud, reducing local workload and enhancing performance. Whether managing files, executing scripts, or handling background tasks, it keep everything running smoothly across your network
+                            </div>
+                        </div>
+                        <div class="feature_info_right">
+                            <img src="../images/server_logo.png" alt="">
+                        </div>
+                    </div>
+                    <h2 style="padding: 0;margin: 0;margin-left: 2.5vw;font-size: 1.6vh;margin-bottom: 10px;">Connected Servers</h2>
+                    <div id="feature_objs_cont" class="feature_objs_container">
+                        <div class="connected_server_container">
+                            <div class="server_status" data-id="001"></div>
+
+                            <img src="../images/server.png" alt="">
+                            <p>Amazon Server 001</p>
+                        </div>
+                        <div class="connected_server_container">
+                            <div class="server_status" data-id="002"></div>
+
+                            <img src="../images/server.png" alt="">
+                            <p>Amazon Server 001</p>
+                        </div>
+                    </div>
+                    <div id="empty_servers" class="feature_objs_container" style="display: none;justify-content: center;align-items: center;">
+                       <p>No Server Found! Create a New One</p>
+                    </div>
+                    
+                </div>
+                <div id="connet_server_popup" style="display: none;">
+                    <div id="connect_info_details" style="display:flex;margin-bottom:10px;">
+                        <div id="con_left" style="width: 60%;">
+                            <h1 style="color: #E79C46;font-size: 3vh;">
+                                Connect New Server
+                            </h1>
+    
+                            <p style="color: grey;font-family: Arial, Helvetica, sans-serif;margin-bottom: 15px;padding: 5px 15px;">
+                                - Copy & run code on server side <br>
+                                - Wait for server to run the program and complete installation. <br>
+                                - Enter the IP Address of server and click connect. <br>
+                                - Click connect to verify the connection.
+                            </p>
+                        </div>
+                        <div id="con_right" style="width: 40%;display: flex;justify-content: center;align-items: center;">
+                            <img src="../images/server.png" style="width: 6vw;height: 6vw;" alt="">
+                        </div>
+                    </div>
+
+                    <div class="popupForm_message">
+                        <div class="popupLabel" style="font-size: 2vh;">Copy & Run Code</div>
+
+                        <div type="text" id="_message" class="popupInput" style="overflow: scroll;font-size: 1.2vh;height: 30px;display: flex;justify-content: flex-start;align-items: center;">
+                            <p id="server_code" style="overflow: scroll;">sudo apt-get update & apt upgrade & git clond hammadrafique029 sudo apt-get update & apt upgrade</p>
+                            <img id="copy_text_btn" data-refer="server_code" src="../images/copy.png" style="width:25px;height:25px;position:absolute;background-color: white;border-radius: 10px; margin-left: 33vw;" alt="">
+                        </div>
+                    </div>
+
+                    <div class="popupForm_message">
+                        <div class="popupLabel" style="font-size: 2vh;">Add Server name </div>
+                        <input type="text" id="server_name" class="popupInput" placeholder="Create unique server name...">
+                    </div>
+
+                    <div class="popupForm_message">
+                        <div class="popupLabel" style="font-size: 2vh;">Server Address</div>
+                        <input type="text" id="server_ip_address" class="popupInput" placeholder="Enter server IP Address (192.168.10.100)...">
+                    </div>
+
+                    <div id="popupBtns" style="width: 100%;">
+                        <div id="con_server_cancelBtn" class="popupBtnDeco" style="cursor: pointer;">Cancel</div>
+                        <div id="con_server_submitBtn" style="color: white;cursor: pointer;background-color: black;font-weight: bold;" class="popupBtnDeco" >Connect<div class="form_submit_loader"></div></div>
+                    </div>
+                    
+                    <!-- <div class="popupForm_message" id="server_status_div">
+                        <div class="popupLabel" style="font-size: 2vh;">Server Status </div>
+                        <p id="server_status_input" class="popupInput"></p>
+                    </div> -->
+
+                </div>
+            </div>
+
+        </div>
+        
     </div>
     
     <div id="popup-widget"></div>
@@ -151,6 +251,9 @@
 
         import { createTitleBar, createNavBar, createPopup, inDisplayNotification, 
         requestResponseLoader, search_widget, task_details_popup } from '../js/widgets.js';
+
+        
+
 
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -181,6 +284,8 @@
             const all_features = document.getElementById('all_functionalities');
             const popup = document.getElementById('popup');
             const popupClose = document.getElementById('cancelBtn');
+            const connect_server_btn = document.getElementById("connect_server_btn");
+            const con_server_cancelBtn = document.getElementById("con_server_cancelBtn");
 
             document.getElementById("close_control_btn").addEventListener("click", () => { 
                 showLoader();
@@ -401,6 +506,32 @@
                 document.getElementById('popup').style.display = "none";
             }
 
+            // document.querySelectorAll(".connected_server_container").forEach(element => {
+            //     element.addEventListener("click", (event)=> { 
+            //         close_connect_server_popUp();
+            //         document.getElementById('server_name').textContent = event.target.dataset.server_name;
+            //         document.getElementById("server_ip_address").textContent = event.target.dataset.server_address;
+            //         // document.getElementById("server_status").textContent = event.target.dataset.server_status;
+            //     });
+            // });
+
+            function open_connect_server_popUp() {
+                document.getElementById("servers_screen").classList.add("blur");
+                document.getElementById('connet_server_popup').style.display = "block";
+                document.getElementById('server_name').value = "";
+                document.getElementById("server_ip_address").value = "";
+            }
+
+            function close_connect_server_popUp() {
+                document.getElementById("servers_screen").classList.remove("blur");
+                document.getElementById('connet_server_popup').style.display = "none";
+                document.getElementById('server_name').value = "";
+                document.getElementById("server_ip_address").value = "";
+            }
+
+            connect_server_btn.addEventListener("click", () => { open_connect_server_popUp() });
+            con_server_cancelBtn.addEventListener("click", () => { close_connect_server_popUp() });
+
             document.getElementById("close_task_details").addEventListener('click', () => { close_task_popUp() });
             document.getElementById('cancelBtn').addEventListener("click", () => { close_feature_popUp() });
             
@@ -558,10 +689,94 @@
 
 
 
+            function Servers_Page_JS() {
+
+                close_task_popUp();
+                close_feature_popUp();
+
+                var RUNNING_SERVERS = null;
+
+                (asy)
+
+                const running_servers = [
+                    // {
+                    //     "server_id": "001",
+                    //     "server_name": "Amazon Server 001",
+                    //     "server_address": "192.168.8.100",
+                    //     "isRunning": true
+                    // },
+                    // {
+                    //     "server_id": "002",
+                    //     "server_name": "Amazon Server 002",
+                    //     "server_address": "192.168.8.100",
+                    //     "isRunning": false
+                    // }
+                ];
+
+                console.log("Testing here: ", running_servers.length)
+                
+                const feature_objs_container = document.querySelector(".feature_objs_container");
+                while (feature_objs_container.firstChild) {
+                    feature_objs_container.removeChild(feature_objs_container.firstChild);
+                }
+
+                if (running_servers.length == 0) {
+                    document.getElementById("empty_servers").style.display = "flex";
+                    document.getElementById("feature_objs_cont").style.display = "none";
+                    console.log("Tetst here:")
+                } else {
+                    document.getElementById("empty_servers").style.display = "none";
+                    document.getElementById("feature_objs_cont").style.display = "flex";
+                    running_servers.forEach(server => {
+                        const serverDiv = document.createElement("div");
+                        serverDiv.classList.add("connected_server_container");
+                        serverDiv.dataset.id = server.server_id;
+                        serverDiv.dataset.server_name = server.server_name;
+                        serverDiv.dataset.server_address = server.server_address;
+                        serverDiv.dataset.isRunning = server.isRunning;
+
+                        serverDiv.addEventListener("click", () => {
+                            close_connect_server_popUp();
+                            open_connect_server_popUp();
+                            document.getElementById('server_name').value = server.server_name;
+                            document.getElementById("server_ip_address").value = server.server_address;
+                            console.log("Server ID: ", server.server_id);
+                        });
+                        
+                        const statusDiv = document.createElement("div");
+                        statusDiv.classList.add("server_status");
+                        statusDiv.setAttribute("data-id", server.server_id);
+                        statusDiv.style.width = "10px";
+                        statusDiv.style.height = "10px";
+                        statusDiv.style.borderRadius = "50%";
+                        statusDiv.style.backgroundColor = server.isRunning ? "green" : "red";
+                        
+                        const img = document.createElement("img");
+                        img.src = "../images/server.png";
+                        img.alt = "Server Image";
+                        
+                        const p = document.createElement("p");
+                        p.textContent = server.server_name;
+                        
+                        serverDiv.appendChild(statusDiv);
+                        serverDiv.appendChild(img);
+                        serverDiv.appendChild(p);
+                        
+                        feature_objs_container.appendChild(serverDiv);
+                    });
+
+                }
+                
+                document.getElementById("copy_text_btn").addEventListener("click", copyText);
+            }
+
+            
+
             function open_navagation_tab(tab) {
                 document.getElementById('feautes_tab').style.display = "none";
                 document.getElementById('scenarios_tab').style.display = "none";
                 document.getElementById('running_tasks_tab').style.display = "none";
+                document.getElementById('connected_servers_tab').style.display = "none";
                 tab.style.display = "flex";
             }
 
@@ -581,6 +796,9 @@
                     } else if (page == "tasks") {
                         open_navagation_tab(document.getElementById('running_tasks_tab'))
                         Tasks_Page_JS();
+                    } else if (page == "servers") {
+                        open_navagation_tab(document.getElementById('connected_servers_tab'))
+                        Servers_Page_JS();
                     }
                 }
             });
@@ -594,6 +812,7 @@
     <link rel="stylesheet" href="../style/tasks.css">
     <link rel="stylesheet" href="../style/cr_scenario.css">
     <link rel="stylesheet" href="../style/scenarios.css">
+    <link rel="stylesheet" href="../style/servers.css">
 
 </body>
 </html>

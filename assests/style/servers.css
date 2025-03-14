@@ -1,0 +1,158 @@
+
+/* 
+#########################################
+--------- Create Scenarios Style
+#########################################
+ */
+
+ #servers_screen.blur {
+    filter: blur(5px);
+    background-color: rgba(67, 67, 67, 0.34);
+}
+
+ #servers_screen{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: transparent;
+ }
+
+ .feature_info_container{
+    width: 99%;
+    height: 33vh;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.feature_info_left{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    row-gap: 1vw;
+    color: rgb(99, 97, 97);
+    margin-left: 2vw;
+    margin-bottom: 5vh;
+}
+.feature_info_right{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#featureDes{
+    font-size: 1.5vh;
+}
+.feature_info_right img{
+    width: 80%;
+    height: 90%;
+}
+.create_feature_btn{
+    width: fit-content;
+    padding: 10px 20px;
+    height: 40%;
+    border-radius: 20px;
+    color: white;
+    font-size: 3.5vh;
+    background-color: #E79C46;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5vw;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    box-shadow: 1px 1px 5px rgb(109, 108, 108);
+    transition: 0.5s all;
+}
+.create_feature_btn:hover{
+    font-size: 3.6vh;
+    cursor: pointer;
+}
+
+
+/* 
+#########################################
+--------- Running Tasks Style
+#########################################
+ */
+
+ .feature_objs_container {
+    width: 94.5%;
+    height: 100%;
+    padding: 10px 10px;
+    border-radius: 10px;
+    height: -webkit-fill-available;
+    margin-left: 2vw;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    /* background-color: red; */
+}
+
+.connected_server_container {
+    width: 9vw;
+    height: 10vw;
+    /* background-color: #E79C46; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 1vw;
+    color: gray;
+    border: none;
+    transition: 0.5s all;
+}
+.connected_server_container:hover{
+    cursor: pointer;
+    border: 1px solid gray;
+    /* background-color: #E7A46B; */
+}
+.connected_server_container img{
+    width: 7vw;
+    height: 7vw;
+    border-radius: 10px;
+}
+.connected_server_container  p {
+    width: 9vw;overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3vh;
+}
+.server_status{
+    width: 0.6vw;
+    height: 0.6vw;
+    border-radius: 2vw;
+    position: absolute;
+    margin-left: 5.7vw;
+    margin-bottom: 15vh;
+    background-color: #12a512;
+    border: 1px solid #564f4f;
+}
+
+#connet_server_popup{
+    width: 45vw;
+    min-height: 200px;
+    padding: 20px 50px;
+    border: 1px solid gray;
+    border-radius: 20px;
+    position: absolute;
+    top: 30vh;
+    left: 32vw;
+    z-index: 2000;
+    background-color: white;
+}
+
+
+
+#copy_text_btn:hover{
+    cursor: pointer;
+}

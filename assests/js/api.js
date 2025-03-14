@@ -136,6 +136,57 @@ async function runOperation(id, feature, func_name, showResponse, rtnType = []) 
 
 
 
+
+async function addNewServer() {
+    try {
+        showLoader();
+        const response = await fetch(`${API_ENDPOINT}/add-server`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+        });
+        const data = await response.json();
+        if (response.ok) {
+            if (showResponse) show_inDisplayNotification('success', "Success", `Feature Executed Successfully`, data.data.response);
+            return data.data.response;
+        } else {
+            if (showResponse) show_inDisplayNotification('danger', "Error!", "Run Operation Failed!", `${data.error}`);
+            return { status: "failed", error: data.error, data: {} };
+        }
+    } catch (error) {
+        return rtnType;
+    } finally {
+        hideLoader();
+    }
+}
+
+
+
+async function getConnectedServers() {
+    try {
+        showLoader();
+        const response = await fetch(`${API_ENDPOINT}/get-servers`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+        });
+        const data = await response.json();
+        if (response.ok) {
+            if (showResponse) show_inDisplayNotification('success', "Success", `Feature Executed Successfully`, data.data.response);
+            return data.data.response;
+        } else {
+            if (showResponse) show_inDisplayNotification('danger', "Error!", "Run Operation Failed!", `${data.error}`);
+            return [];
+        }
+    } catch (error) {
+        return rtnType;
+    } finally {
+        hideLoader();
+    }
+}
+
+
+
 async function uploadFile(file) {
     try {
         showLoader();
