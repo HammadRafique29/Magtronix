@@ -696,77 +696,63 @@
 
                 var RUNNING_SERVERS = null;
 
-                (asy)
-
-                const running_servers = [
-                    // {
-                    //     "server_id": "001",
-                    //     "server_name": "Amazon Server 001",
-                    //     "server_address": "192.168.8.100",
-                    //     "isRunning": true
-                    // },
-                    // {
-                    //     "server_id": "002",
-                    //     "server_name": "Amazon Server 002",
-                    //     "server_address": "192.168.8.100",
-                    //     "isRunning": false
-                    // }
-                ];
-
-                console.log("Testing here: ", running_servers.length)
+                (async () => {
+                    RUNNING_SERVERS = await getConnectedServers();
+                    console.log("Testing here: ", RUNNING_SERVERS.length)
                 
-                const feature_objs_container = document.querySelector(".feature_objs_container");
-                while (feature_objs_container.firstChild) {
-                    feature_objs_container.removeChild(feature_objs_container.firstChild);
-                }
+                    const feature_objs_container = document.querySelector(".feature_objs_container");
+                    while (feature_objs_container.firstChild) {
+                        feature_objs_container.removeChild(feature_objs_container.firstChild);
+                    }
 
-                if (running_servers.length == 0) {
-                    document.getElementById("empty_servers").style.display = "flex";
-                    document.getElementById("feature_objs_cont").style.display = "none";
-                    console.log("Tetst here:")
-                } else {
-                    document.getElementById("empty_servers").style.display = "none";
-                    document.getElementById("feature_objs_cont").style.display = "flex";
-                    running_servers.forEach(server => {
-                        const serverDiv = document.createElement("div");
-                        serverDiv.classList.add("connected_server_container");
-                        serverDiv.dataset.id = server.server_id;
-                        serverDiv.dataset.server_name = server.server_name;
-                        serverDiv.dataset.server_address = server.server_address;
-                        serverDiv.dataset.isRunning = server.isRunning;
+                    if (RUNNING_SERVERS.length == 0) {
+                        document.getElementById("empty_servers").style.display = "flex";
+                        document.getElementById("feature_objs_cont").style.display = "none";
+                        console.log("Tetst here:")
+                    } else {
+                        document.getElementById("empty_servers").style.display = "none";
+                        document.getElementById("feature_objs_cont").style.display = "flex";
+                        RUNNING_SERVERS.forEach(server => {
+                            const serverDiv = document.createElement("div");
+                            serverDiv.classList.add("connected_server_container");
+                            serverDiv.dataset.id = server.server_id;
+                            serverDiv.dataset.server_name = server.server_name;
+                            serverDiv.dataset.server_address = server.server_address;
+                            serverDiv.dataset.isRunning = server.isRunning;
 
-                        serverDiv.addEventListener("click", () => {
-                            close_connect_server_popUp();
-                            open_connect_server_popUp();
-                            document.getElementById('server_name').value = server.server_name;
-                            document.getElementById("server_ip_address").value = server.server_address;
-                            console.log("Server ID: ", server.server_id);
+                            serverDiv.addEventListener("click", () => {
+                                close_connect_server_popUp();
+                                open_connect_server_popUp();
+                                document.getElementById('server_name').value = server.server_name;
+                                document.getElementById("server_ip_address").value = server.server_address;
+                                console.log("Server ID: ", server.server_id);
+                            });
+                            
+                            const statusDiv = document.createElement("div");
+                            statusDiv.classList.add("server_status");
+                            statusDiv.setAttribute("data-id", server.server_id);
+                            statusDiv.style.width = "10px";
+                            statusDiv.style.height = "10px";
+                            statusDiv.style.borderRadius = "50%";
+                            statusDiv.style.backgroundColor = server.isRunning ? "green" : "red";
+                            
+                            const img = document.createElement("img");
+                            img.src = "../images/server.png";
+                            img.alt = "Server Image";
+                            
+                            const p = document.createElement("p");
+                            p.textContent = server.server_name;
+                            
+                            serverDiv.appendChild(statusDiv);
+                            serverDiv.appendChild(img);
+                            serverDiv.appendChild(p);
+                            
+                            feature_objs_container.appendChild(serverDiv);
                         });
-                        
-                        const statusDiv = document.createElement("div");
-                        statusDiv.classList.add("server_status");
-                        statusDiv.setAttribute("data-id", server.server_id);
-                        statusDiv.style.width = "10px";
-                        statusDiv.style.height = "10px";
-                        statusDiv.style.borderRadius = "50%";
-                        statusDiv.style.backgroundColor = server.isRunning ? "green" : "red";
-                        
-                        const img = document.createElement("img");
-                        img.src = "../images/server.png";
-                        img.alt = "Server Image";
-                        
-                        const p = document.createElement("p");
-                        p.textContent = server.server_name;
-                        
-                        serverDiv.appendChild(statusDiv);
-                        serverDiv.appendChild(img);
-                        serverDiv.appendChild(p);
-                        
-                        feature_objs_container.appendChild(serverDiv);
-                    });
 
-                }
-                
+                    }
+                })
+
                 document.getElementById("copy_text_btn").addEventListener("click", copyText);
             }
 

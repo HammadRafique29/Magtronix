@@ -176,7 +176,20 @@ async function getConnectedServers() {
             return data.data.response;
         } else {
             if (showResponse) show_inDisplayNotification('danger', "Error!", "Run Operation Failed!", `${data.error}`);
-            return [];
+            return [
+                {
+                    "server_id": "001",
+                    "server_name": "Amazon Server 001",
+                    "server_address": "192.168.8.100",
+                    "isRunning": true
+                },
+                {
+                    "server_id": "002",
+                    "server_name": "Amazon Server 002",
+                    "server_address": "192.168.8.100",
+                    "isRunning": false
+                }
+            ];
         }
     } catch (error) {
         return rtnType;
