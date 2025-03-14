@@ -32,8 +32,8 @@ This repository is currently being prepared to provide project details, updates,
 - Add Ollama on Startup
 
 ## 🐳 Installation Using Docker
-- ghcr.io/open-webui/open-webui:main
-- ghcr.io/coqui-ai/tts:latest
+- `docker pull ghcr.io/open-webui/open-webui:main`
+- `docker pull ghcr.io/coqui-ai/tts:latest`
 
 ## 📥 Pulling Ollama Models
 - llama3.2:1b       [Ollama - Optional]
