@@ -25,7 +25,7 @@ This repository is currently being prepared to provide project details, updates,
 - Install Ollama
 - Install NPM, Node
 - Install Python3.11.9
-- Download ffmpeg and ADD TO PATH [Windows]
+- Download <a href="https://drive.google.com/file/d/1HwEfMDmuNTqKxiLnsGssa6oib3pzVpEx/view?usp=sharing" target="_blank">ffmpeg.7z</a></span> and ADD TO PATH [Windows]
 
 ## ⚙️ Configuration
 - Add Docker on Startup
