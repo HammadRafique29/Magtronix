@@ -43,14 +43,6 @@ async function get_files(id, feature, FEATURES_DATA) {
 }
 
 
-// CLOSE TASK DETAILS BUTTON
-document.getElementById("close_task_details").addEventListener('click', () => {
-    document.getElementById('task_details_container').style.display = "none";
-    document.getElementById('task_details_container').style.display = "none";
-    document.getElementById('task_screen').style.display = "block";
-
-})
-
 
 function closeAllTabs() {
 

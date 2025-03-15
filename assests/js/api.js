@@ -162,7 +162,7 @@ async function addNewServer() {
 
 
 
-async function getConnectedServers() {
+async function getConnectedServers(showResponse) {
     try {
         showLoader();
         const response = await fetch(`${API_ENDPOINT}/get-servers`, {

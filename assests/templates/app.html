@@ -193,7 +193,7 @@
                                 Connect New Server
                             </h1>
     
-                            <p style="color: grey;font-family: Arial, Helvetica, sans-serif;margin-bottom: 15px;padding: 5px 15px;">
+                            <p style="color: grey;font-family: Arial, Helvetica, sans-serif;margin-bottom: 15px;padding: 5px 15px;font-size: 1.4vh;">
                                 - Copy & run code on server side <br>
                                 - Wait for server to run the program and complete installation. <br>
                                 - Enter the IP Address of server and click connect. <br>
@@ -689,69 +689,70 @@
 
 
 
-            function Servers_Page_JS() {
+            async function Servers_Page_JS() {
 
                 close_task_popUp();
                 close_feature_popUp();
 
                 var RUNNING_SERVERS = null;
 
-                (async () => {
-                    RUNNING_SERVERS = await getConnectedServers();
-                    console.log("Testing here: ", RUNNING_SERVERS.length)
-                
-                    const feature_objs_container = document.querySelector(".feature_objs_container");
-                    while (feature_objs_container.firstChild) {
-                        feature_objs_container.removeChild(feature_objs_container.firstChild);
-                    }
+                console.log("Testing here: ");
 
-                    if (RUNNING_SERVERS.length == 0) {
-                        document.getElementById("empty_servers").style.display = "flex";
-                        document.getElementById("feature_objs_cont").style.display = "none";
-                        console.log("Tetst here:")
-                    } else {
-                        document.getElementById("empty_servers").style.display = "none";
-                        document.getElementById("feature_objs_cont").style.display = "flex";
-                        RUNNING_SERVERS.forEach(server => {
-                            const serverDiv = document.createElement("div");
-                            serverDiv.classList.add("connected_server_container");
-                            serverDiv.dataset.id = server.server_id;
-                            serverDiv.dataset.server_name = server.server_name;
-                            serverDiv.dataset.server_address = server.server_address;
-                            serverDiv.dataset.isRunning = server.isRunning;
+                console.log("Sending Requests");
+                RUNNING_SERVERS = await getConnectedServers(true);
+                console.log("Testing here: ", RUNNING_SERVERS.length)
+            
+                const feature_objs_container = document.querySelector(".feature_objs_container");
+                while (feature_objs_container.firstChild) {
+                    feature_objs_container.removeChild(feature_objs_container.firstChild);
+                }
 
-                            serverDiv.addEventListener("click", () => {
-                                close_connect_server_popUp();
-                                open_connect_server_popUp();
-                                document.getElementById('server_name').value = server.server_name;
-                                document.getElementById("server_ip_address").value = server.server_address;
-                                console.log("Server ID: ", server.server_id);
-                            });
-                            
-                            const statusDiv = document.createElement("div");
-                            statusDiv.classList.add("server_status");
-                            statusDiv.setAttribute("data-id", server.server_id);
-                            statusDiv.style.width = "10px";
-                            statusDiv.style.height = "10px";
-                            statusDiv.style.borderRadius = "50%";
-                            statusDiv.style.backgroundColor = server.isRunning ? "green" : "red";
-                            
-                            const img = document.createElement("img");
-                            img.src = "../images/server.png";
-                            img.alt = "Server Image";
-                            
-                            const p = document.createElement("p");
-                            p.textContent = server.server_name;
-                            
-                            serverDiv.appendChild(statusDiv);
-                            serverDiv.appendChild(img);
-                            serverDiv.appendChild(p);
-                            
-                            feature_objs_container.appendChild(serverDiv);
+                if (RUNNING_SERVERS.length == 0) {
+                    document.getElementById("empty_servers").style.display = "flex";
+                    document.getElementById("feature_objs_cont").style.display = "none";
+                    console.log("Tetst here:")
+                } else {
+                    document.getElementById("empty_servers").style.display = "none";
+                    document.getElementById("feature_objs_cont").style.display = "flex";
+                    RUNNING_SERVERS.forEach(server => {
+                        const serverDiv = document.createElement("div");
+                        serverDiv.classList.add("connected_server_container");
+                        serverDiv.dataset.id = server.server_id;
+                        serverDiv.dataset.server_name = server.server_name;
+                        serverDiv.dataset.server_address = server.server_address;
+                        serverDiv.dataset.isRunning = server.isRunning;
+
+                        serverDiv.addEventListener("click", () => {
+                            close_connect_server_popUp();
+                            open_connect_server_popUp();
+                            document.getElementById('server_name').value = server.server_name;
+                            document.getElementById("server_ip_address").value = server.server_address;
+                            console.log("Server ID: ", server.server_id);
                         });
+                        
+                        const statusDiv = document.createElement("div");
+                        statusDiv.classList.add("server_status");
+                        statusDiv.setAttribute("data-id", server.server_id);
+                        statusDiv.style.width = "10px";
+                        statusDiv.style.height = "10px";
+                        statusDiv.style.borderRadius = "50%";
+                        statusDiv.style.backgroundColor = server.isRunning ? "green" : "red";
+                        
+                        const img = document.createElement("img");
+                        img.src = "../images/server.png";
+                        img.alt = "Server Image";
+                        
+                        const p = document.createElement("p");
+                        p.textContent = server.server_name;
+                        
+                        serverDiv.appendChild(statusDiv);
+                        serverDiv.appendChild(img);
+                        serverDiv.appendChild(p);
+                        
+                        feature_objs_container.appendChild(serverDiv);
+                    });
 
-                    }
-                })
+                }
 
                 document.getElementById("copy_text_btn").addEventListener("click", copyText);
             }
@@ -769,7 +770,7 @@
             open_navagation_tab(document.getElementById('feautes_tab'));
             Features_Page_JS();
 
-            document.getElementById("nav-bar-widget").addEventListener("click", (event) => {
+            document.getElementById("nav-bar-widget").addEventListener("click", async (event) => {
                 const target = event.target.closest(".navBtn"); 
                 if (target) {
                     const page = target.getAttribute("data-page");
@@ -784,7 +785,7 @@
                         Tasks_Page_JS();
                     } else if (page == "servers") {
                         open_navagation_tab(document.getElementById('connected_servers_tab'))
-                        Servers_Page_JS();
+                        await Servers_Page_JS();
                     }
                 }
             });
