@@ -1,4 +1,60 @@
 
+const fs = require('fs');
+const path = require('path');
+
+// Define the path to the JSON file in the current directory
+const connected_servers = path.join(__dirname, 'connected_servers.json');
+
+
+// Function to read JSON file
+function readJSONFile() {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading file:', err);
+        return;
+      }
+      try {
+        const jsonData = JSON.parse(data);
+        console.log('Read JSON data:', jsonData);
+      } catch (err) {
+        console.error('Error parsing JSON:', err);
+      }
+    });
+  }
+  
+  // Function to write to JSON file
+  function writeJSONFile(jsonObject) {
+    const jsonString = JSON.stringify(jsonObject, null, 2);
+    
+    fs.writeFile(filePath, jsonString, 'utf8', (err) => {
+      if (err) {
+        console.error('Error writing file:', err);
+        return;
+      }
+      console.log('JSON data successfully written to file.');
+    });
+  }
+  
+  // Example usage
+  const sampleData = [
+    {
+        "server_id": "002",
+        "server_name": "Local Server",
+        "server_address": "http://localhost:8081",
+        "isRunning": true
+    }
+];
+
+// Check if file exists synchronously
+if (fs.existsSync(connected_servers)) {
+    CONNECTED_SERVERS = readJSONFile();
+  } else {
+    writeJSONFile(sampleData);
+    CONNECTED_SERVERS = sampleData;
+    console.log('File does not exist');
+  }
+  
+  
 
 function show_inDisplayNotification(notType, title, message, details) { 
 
@@ -49,6 +105,8 @@ function show_inDisplayNotification(notType, title, message, details) {
         noti.style.display = "none";
     }, 5000);
 }
+
+
 
 function showLoader() {
     const loader = document.getElementById("request_response_loader")
