@@ -474,7 +474,10 @@ function createPopupContent(feature_name, method_name, featureData) {
                         }
                     } else {
                         value = input.value;
+                        console.log(value, input.id);
                         if (!value && !isOptional) {
+                            console.log("Heer it is: ")
+                            console.log(value, input.id);
                             show_inDisplayNotification("danger", "Error", "Field with * are required", '');
                             isValidRequest = false;
                             return false;
@@ -566,6 +569,9 @@ function createPopupContent(feature_name, method_name, featureData) {
                 break;
             case "response/id":
                 show_inDisplayNotification("success", "Success", `Task is running with id ${featureResponse.value}`, '');
+                return;
+            case "response/success":
+                show_inDisplayNotification("success", "Success", `${featureResponse.value}`, '');
                 return;
             case "audio/file":
                 const [label, audioBox] = createAudioResponse(featureResponse.value);
