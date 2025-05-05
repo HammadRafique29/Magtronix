@@ -57,10 +57,10 @@ This repository is currently being prepared to provide project details, updates,
 ## 📷 App Screenshots
 We have been working hard on the UI, and here are some early previews:
 
-![Screenshot from 2025-03-03 13-47-24](https://github.com/user-attachments/assets/70005e3a-95cf-4149-8055-b991da8e311c)
-![Screenshot from 2025-03-03 14-22-02](https://github.com/user-attachments/assets/8288b1b8-7c2d-48dc-9a28-8a1dddf6dbd3)
-![Screenshot from 2025-03-03 14-22-19](https://github.com/user-attachments/assets/ce89b42f-75f0-4fc0-8f80-8df1dd8f1e29)
-![Screenshot from 2025-03-03 14-22-27](https://github.com/user-attachments/assets/ef561fe0-5636-453d-bef1-1c1d410231fd)
+![1740994205165](https://github.com/user-attachments/assets/10cf2b40-0f83-4bfd-8574-ccf37a0ca3cd)
+![1740994197637](https://github.com/user-attachments/assets/f11ff3da-2a2a-4b39-9238-882f8923fca8)
+![1740994205864](https://github.com/user-attachments/assets/f94b0faf-81bb-40f9-b2c4-d0640489ff1e)
+![1740994203158](https://github.com/user-attachments/assets/57d38b50-7532-4aa7-8dec-302bd4cd2f89)
 
 ## 📢 Stay Tuned
 This project is actively in development. **A dashboard preview will be shared soon!** 👀
